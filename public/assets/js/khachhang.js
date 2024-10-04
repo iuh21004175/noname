@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', async function (){
     const txtTimKiem = document.querySelector('#txt-timKiem')
     const txtDiaChi = document.querySelector('#txt-diaChiU')
     const combobox = document.querySelector('#combobox-timKiem')
+    const comboboxCapNhatTrangThai = document.querySelector('#combobox-CapNhatTrangThai')
+    const comboboxDanhSachTuTrangThai = document.querySelector('#combobox-danhSachTuTrangThai')
     let hopLeHoVaTen = false
     let hopLeSoDienThoai = false
     let hopLeHoVaTenU = false
@@ -54,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async function (){
             btn.onclick = function (){
                 btnXacNhanXoa.value = this.value
 
-                let khachHang = list.find(kh => kh.MaKhachHang === parseInt(this.value))
+                let khachHang = list.find(kh => kh.MaKhachHang === this.value)
                 messageXoa.querySelector('.modal-body').innerHTML = `Bạn có muốn xóa khách hàng ${khachHang.TenKhachHang} không ?`
             }
         })
@@ -74,6 +76,9 @@ document.addEventListener('DOMContentLoaded', async function (){
                 if(data.status === 'success'){
                     window.location.href = './khach-hang'
                 }
+                else {
+                    alert(data.message)
+                }
             }
             catch (error){
                 console.error('Fetch error: ', error)
@@ -86,9 +91,10 @@ document.addEventListener('DOMContentLoaded', async function (){
             btn.onclick = function (){
                 btnXacNhanCapNhat.value = this.value
                 maKhachU = this.value
-                let khachHang = list.find(kh => kh.MaKhachHang === parseInt(this.value))
+                let khachHang = list.find(kh => kh.MaKhachHang === this.value)
                 txtHoVaTenU.value = khachHang.TenKhachHang
                 txtSoDienThoaiU.value = khachHang.SoDienThoai
+
 
                 radioGioiTinh.forEach(function (radio, index){
                     if(radio.value === khachHang.GioiTinh){
@@ -96,6 +102,7 @@ document.addEventListener('DOMContentLoaded', async function (){
                     }
                 })
                 txtDiaChi.value = khachHang.DiaChi
+                comboboxCapNhatTrangThai.value = khachHang.TrangThai
             }
         })
     }
@@ -161,7 +168,7 @@ document.addEventListener('DOMContentLoaded', async function (){
                 hopLeSoDienThoaiU = false
             }
             else {
-                let khachHangU = listKhachHangGoc.find(kh => kh.MaKhachHang === parseInt(maKhachU))
+                let khachHangU = listKhachHangGoc.find(kh => kh.MaKhachHang === maKhachU)
                 if(listKhachHangGoc.find(kh => kh.SoDienThoai === txtSoDienThoaiU.value) && khachHangU.SoDienThoai !== txtSoDienThoaiU.value){
                     messageErrorSDTU.innerHTML = 'Số điện thoại này đã được sử dụng'
                     hopLeSoDienThoaiU = false
@@ -288,6 +295,7 @@ document.addEventListener('DOMContentLoaded', async function (){
     btnThem.onclick =  function (){
         kiemTraHoVaTen()
         kiemTraSoDienThoai()
+        
         if(hopLeHoVaTen === true && hopLeSoDienThoai === true){
             let radioGioiTinh = document.querySelector('input[name="radio-gioiTinh"]:checked')
             let newKhachHang = {
@@ -299,8 +307,10 @@ document.addEventListener('DOMContentLoaded', async function (){
         }
     }
     btnXacNhanCapNhat.onclick=  function (){
+        
         kiemTraHoVaTenU()
         kiemTraSoDienThoaiU()
+
         if(hopLeHoVaTenU === true && hopLeSoDienThoaiU === true){
             let radioGioiTinhU = document.querySelector('input[name="radio-gioiTinhU"]:checked')
             let khachHang = {
@@ -308,20 +318,40 @@ document.addEventListener('DOMContentLoaded', async function (){
                 'TenKhachHang': txtHoVaTenU.value,
                 'SoDienThoai': txtSoDienThoaiU.value,
                 'GioiTinh':radioGioiTinhU.value,
-                'DiaChi': txtDiaChi.value !== '' ? txtDiaChi.value : null
+                'DiaChi': txtDiaChi.value !== '' ? txtDiaChi.value : null,
+                'TrangThai': comboboxCapNhatTrangThai.value
             }
             capNhatKhachHang(khachHang)
         }
     }
+    comboboxDanhSachTuTrangThai.onchange = async function (){
+        try{
+            const response = await fetch(`./fetch/danh-sach-khach-hang-theo-trang-thai-${this.value}`)
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            const data = await response.json()
+            listKhachHangGoc = []
+            if(data != null){
+                listKhachHangGoc = Array.from(data)
+                renderKhachHang(listKhachHangGoc)
+            }
+        }
+        catch (error){
+            console.log('Fetch error: ',error)
+        }
+    }
     try{
-        const response = await fetch('./fetch/danh-sach-khach-hang')
+        const response = await fetch(`./fetch/danh-sach-khach-hang-theo-trang-thai-${comboboxDanhSachTuTrangThai.value}`)
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
         }
         const data = await response.json()
-
-        listKhachHangGoc = Array.from(data)
-        renderKhachHang(listKhachHangGoc)
+        listKhachHangGoc = []
+        if(data != null){
+            listKhachHangGoc = Array.from(data)
+            renderKhachHang(listKhachHangGoc)
+        }
     }
     catch (error){
         console.log('Fetch error: ',error)

@@ -20,23 +20,31 @@
                 <button class="btn btn-outline-success w-auto" data-bs-toggle="modal" data-bs-target="#form-themNhanVien">Thêm nhân viên</button>
             </div>
         </nav>
-        <div class="mt-3 overflow-scroll" style="height: 500px">
-            <table class="table table-bordered table-hover" id="table-nhanVien">
-                <thead class="table-light">
-                <tr>
-                    <th>STT</th>
-                    <th>Mã nhân viên</th>
-                    <th>Họ và tên</th>
-                    <th>Loại nhân viên</th>
-                    <th>Thao tác</th>
-                </tr>
-                </thead>
-                <tbody>
+        <div class="mt-3">
+            <h4 class="d-inline-block mb-0">Danh sách nhân viên</h4>
+            <select name="combobox-danhSachTuTrangThai" id="combobox-danhSachTuTrangThai">
+                <option value="0">Đã nghỉ</option>
+                <option value="1" selected>Đang làm</option>
+            </select>
+            <div class="mt-3 overflow-scroll" style="height: 500px">
+                <table class="table table-bordered table-hover" id="table-nhanVien">
+                    <thead class="table-light">
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã nhân viên</th>
+                        <th>Họ và tên</th>
+                        <th>Loại nhân viên</th>
+                        <th>Trạng thái hoạt động</th>
+                        <th>Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-                </tbody>
-            </table>
-            <div class="d-none" id="message-nhanVien">
-                Không có nhân viên
+                    </tbody>
+                </table>
+                <div class="d-none" id="message-nhanVien">
+                    Không có nhân viên
+                </div>
             </div>
         </div>
     </div>
@@ -130,7 +138,13 @@
                                 <label class="form-label">Ghi chú: </label>
                                 <textarea class="form-control" id="txt-CapNhatGhiChu" name="txt-CapNhatGhiChu"></textarea>
                             </div>
-                        
+                            <div class="row">
+                                <label class="form-label">Trạng thái</label>
+                                <select id="combobox-CapNhatTrangThai" class="form-control">
+                                    <option value="0">Đã nghỉ</option>
+                                    <option value="1" selected>Đang làm</option>
+                                </select>
+                            </div>
                             <div class="row">
                                 <label class="form-label">Mật khẩu: <span class="text-danger" id="message-errorCapNhatMatKhau"></span> </label>
                                 <input type="password" class="form-control" id="txt-CapNhatMatKhau" name="txt-CapNhatMatKhau">

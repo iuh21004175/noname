@@ -20,9 +20,15 @@
                 <button class="btn btn-outline-success w-auto" data-bs-toggle="modal" data-bs-target="#form-themKhachHang">Thêm khách hàng</button>
             </div>
         </nav>
-        <div class="mt-3 overflow-scroll" style="height: 500px">
-            <table class="table table-bordered table-hover" id="table-khachHang">
-                <thead class="table-light">
+        <div class="mt-3">
+            <h4 class="d-inline-block mb-0">Danh sách khách hàng</h4>
+            <select name="combobox-danhSachTuTrangThai" id="combobox-danhSachTuTrangThai">
+                <option value="0">Ít hoạt động</option>
+                <option value="1" selected>Hoạt động thường xuyên</option>
+            </select>
+            <div class="mt-3 overflow-scroll" style="height: 500px">
+                <table class="table table-bordered table-hover" id="table-khachHang">
+                    <thead class="table-light">
                     <tr>
                         <th>STT</th>
                         <th>Họ và tên</th>
@@ -30,15 +36,17 @@
                         <th>Tích điểm</th>
                         <th>Thao tác</th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
 
-                </tbody>
-            </table>
-            <div class="d-none" id="message-khachHang">
-                Không có khách hàng
+                    </tbody>
+                </table>
+                <div class="d-none" id="message-khachHang">
+                    Không có khách hàng
+                </div>
             </div>
         </div>
+
     </div>
     <div class="modal fade" id="form-themKhachHang" tabindex="-1"  aria-hidden="true" >
         <div class="modal-dialog">
@@ -113,7 +121,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <label class="form-label">Họ và tên: <span class="text-danger" id="message-errorTenU"></span> </label>
-                                <input type="text" class="form-control" id="txt-hoVaTenU" name="txt-hoVaTenU">
+                                <input type="text" class="form-control" id="txt-hoVaTenU" name="txt-hoVaTenU" disabled>
                             </div>
                             <div class="row">
                                 <label class="form-label">Số điện thoại: <span class="text-danger" id="message-errorSoDienThoaiU"></span></label>
@@ -138,7 +146,14 @@
                                 <label class="form-label">Địa chỉ: </label>
                                 <textarea type="text" class="form-control" id="txt-diaChiU" name="txt-diaChiU"></textarea>
                             </div>
-                    </div>
+                            <div class="row">
+                                <label class="form-label">Trạng thái</label>
+                                <select class="form-control" name="combobox-CapNhatTrangThai" id="combobox-CapNhatTrangThai">
+                                    <option value="0">Ít hoạt động</option>
+                                    <option value="1">Hoạt động thường xuyên</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>

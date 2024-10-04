@@ -7,7 +7,7 @@
         <div class="row">
             <p>Mã khuyến mãi: {{$khuyenMai['MaKhuyenMai']}}</p>
             <p>Chủ đề: {{$khuyenMai['ChuDe']}}</p>
-            <p>Mô tả: {{$khuyenMai['Mota'] != null ? $khuyenMai['Mota'] : ''}}</p>
+            <p>Mô tả: {{$khuyenMai['MoTa'] != null ? $khuyenMai['MoTa'] : ''}}</p>
             <p>Phần trăm khuyến mãi: {{$khuyenMai['PhanTram']}}</p>
             <p>Điều kiện khuyến mãi: mua {{$khuyenMai['DieuKien']}} món ăn</p>
             <p>Thời gian bắt đầu: {{$khuyenMai['BatDau']}}</p>

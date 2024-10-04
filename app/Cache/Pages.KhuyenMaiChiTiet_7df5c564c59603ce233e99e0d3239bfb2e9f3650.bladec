@@ -7,7 +7,7 @@
  <div class="row">
  <p>Mã khuyến mãi: <?php echo \htmlentities($khuyenMai['MaKhuyenMai']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
  <p>Chủ đề: <?php echo \htmlentities($khuyenMai['ChuDe']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
- <p>Mô tả: <?php echo \htmlentities($khuyenMai['Mota'] != null ? $khuyenMai['Mota'] : ''??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <p>Mô tả: <?php echo \htmlentities($khuyenMai['MoTa'] != null ? $khuyenMai['MoTa'] : ''??'', ENT_QUOTES, 'UTF-8', false); ?></p>
  <p>Phần trăm khuyến mãi: <?php echo \htmlentities($khuyenMai['PhanTram']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
  <p>Điều kiện khuyến mãi: mua <?php echo \htmlentities($khuyenMai['DieuKien']??'', ENT_QUOTES, 'UTF-8', false); ?> món ăn</p>
  <p>Thời gian bắt đầu: <?php echo \htmlentities($khuyenMai['BatDau']??'', ENT_QUOTES, 'UTF-8', false); ?></p>

@@ -25,6 +25,7 @@ class CtrlDangNhap extends Controller
         $md5mk = md5($matkhau);
         $nhanVien = NhanVien::where('SoDienThoai', $tendn)
                                         ->where('MatKhau', $md5mk)
+                                        ->where('TrangThai', 1)
                                         ->first();
         if ($nhanVien) {
             // Đăng nhập thành công
@@ -32,6 +33,9 @@ class CtrlDangNhap extends Controller
             $_SESSION['username'] = $nhanVien['TenNhanVien'];
             $_SESSION['role'] = $nhanVien['MaLoaiNhanVien'];
             $_SESSION['image_user'] = $nhanVien['HinhAnh'];
+            NhanVien::where('MaNhanVien', $nhanVien['MaNhanVien'])->update([
+                'TrangThaiHoatDong' => 'Online'
+            ]);
             return array('status' => 'success');
         } else {
             // Đăng nhập thất bại
@@ -56,6 +60,9 @@ class CtrlDangNhap extends Controller
     }
     public function dangXuat()
     {
+        NhanVien::where('MaNhanVien', $_SESSION['user_id'])->update([
+            'TrangThaiHoatDong' => 'Offline'
+        ]);
         session_destroy();
         return array('status' => 'success');
     }

@@ -4,8 +4,8 @@
  <li class="nav-item"><a href="./don-hang" class="nav-link">Đơn hàng</a></li>
  <li class="nav-item"><a href="./khach-hang" class="nav-link">Khách hàng</a></li>
  <li class="nav-item"><a href="./khuyen-mai" class="nav-link">Khuyến mãi</a></li>
- <li class="nav-item"><a href="./mon-an" class="nav-link">Món ăn</a></li>
- <?php if($_SESSION['role'] == 1): ?>
+ <li class="nav-item"><a href="./thuc-don" class="nav-link">Thực đơn</a></li>
+ <?php if($_SESSION['role'] == 'LNV0000001'): ?>
  <li class="nav-item"><a href="./nhan-vien" class="nav-link">Nhân viên</a></li>
  <?php endif; ?>
  </ul>

@@ -5,7 +5,7 @@
         <a href="./don-hang">Quản lý đơn hàng</a>
         <div class="row">
 
-            <div class="col-7" id="form-donHang">
+            <div class="col-8" id="form-donHang">
                 <form>
                     <h4 class="text-center">Đơn hàng</h4>
                     <div class="row mb-2">
@@ -23,7 +23,9 @@
                             <th>STT</th>
                             <th>Tên món ăn</th>
                             <th>Số lượng</th>
+                            <th>Đơn vị</th>
                             <th>Giá</th>
+                            <th>Ghi chú</th>
                             <th>Bỏ</th>
                             </thead>
                             <tbody>
@@ -47,21 +49,23 @@
                 </form>
 
             </div>
-            <div class="col-5">
+            <div class="col-4">
                 <h5>Danh sách món ăn</h5>
-                <table class="table table-hover table-bordered" id="danhSachMA">
-                    <thead class="table-light">
+                <div class="overflow-scroll" style="height: 600px">
+                    <table class="table table-hover table-bordered" id="danhSachMA">
+                        <thead class="table-light sticky-top">
                         <tr>
                             <td>Tên món</td>
                             <td>Giá</td>
                             <td>Thêm</td>
 
                         </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
 
             </div>
         </div>

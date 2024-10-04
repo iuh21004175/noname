@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', async function (){
     const comboboxTimKiem = document.querySelector('#combobox-timKiem')
     const comboboxThemPhanTram = document.querySelector('#combobox-ThemPhanTram')
     const comboboxCapNhatPhanTram = document.querySelector('#combobox-CapNhatPhanTram')
+    const comboboxDanhSachTuTrangThai = document.querySelector('#combobox-danhSachTuTrangThai')
 
     let hopLeThemChuDe = false
     let hopLeThemDieuKien = false
@@ -49,6 +50,12 @@ document.addEventListener('DOMContentLoaded', async function (){
             messageKhuyenMai.classList.add('d-none')
             list.forEach(function (khuyenMai, index){
                 let newRow = document.createElement('tr')
+                let capNhatButton = ''
+                const thoiGianKetThuc = new Date(khuyenMai.KetThuc);
+                const thoiGianHienTai = new Date();
+                if(thoiGianHienTai < thoiGianKetThuc){
+                    capNhatButton = `<button class="btn btn-outline-primary btn-capNhat" data-bs-toggle="modal" data-bs-target="#form-capNhat" value="${khuyenMai.MaKhuyenMai}">Cập nhật</button>`
+                }
                 newRow.innerHTML = `
                 <td >${index + 1}</td>
                 <td>${khuyenMai.MaKhuyenMai}</td>
@@ -59,7 +66,7 @@ document.addEventListener('DOMContentLoaded', async function (){
                 <td>
                     <a href="./khuyen-mai-chi-tiet-${khuyenMai.MaKhuyenMai}" class="btn btn-light">Xem</a>
                     <button class="btn btn-outline-danger btn-xoa" data-bs-toggle="modal" data-bs-target="#message-xoa" value="${khuyenMai.MaKhuyenMai}">Xóa</button>
-                    <button class="btn btn-outline-primary btn-capNhat" data-bs-toggle="modal" data-bs-target="#form-capNhat" value="${khuyenMai.MaKhuyenMai}">Cập nhật</button>
+                    ${capNhatButton}
                 </td>
             `
                 tableKhuyenMai.appendChild(newRow)
@@ -94,6 +101,9 @@ document.addEventListener('DOMContentLoaded', async function (){
                 if(data.status === 'success'){
                     window.location.href = './khuyen-mai'
                 }
+                else {
+                    alert(data.message)
+                }
             }
             catch (error){
                 console.error('Fetch error: ', error)
@@ -103,14 +113,17 @@ document.addEventListener('DOMContentLoaded', async function (){
         const btnCapNhatS = document.querySelectorAll('.btn-capNhat')
         btnCapNhatS.forEach(function (btn, index){
             btn.onclick = function (){
-                const khuyenMai = listKhuyenMaiGoc.find(km => km.MaKhuyenMai === parseInt(this.value))
-                txtCapNhatChuDe.value = khuyenMai.ChuDe
-                txtCapNhatDieuKien.value = khuyenMai.DieuKien
-                txtCapNhatBatDau.value = khuyenMai.BatDau
-                txtCapNhatKetThuc.value = khuyenMai.KetThuc
-                txtCapNhatMoTa.value = khuyenMai.MoTa
-                comboboxCapNhatPhanTram.value = khuyenMai.PhanTram
-                btnXacNhanCapNhat.value = khuyenMai.MaKhuyenMai
+                const khuyenMai = listKhuyenMaiGoc.find(km => km.MaKhuyenMai === this.value);
+
+                txtCapNhatChuDe.value = khuyenMai.ChuDe;
+                txtCapNhatDieuKien.value = khuyenMai.DieuKien;
+                txtCapNhatBatDau.value = khuyenMai.BatDau;
+                txtCapNhatKetThuc.value = khuyenMai.KetThuc;
+                txtCapNhatMoTa.value = khuyenMai.MoTa;
+                comboboxCapNhatPhanTram.value = khuyenMai.PhanTram;
+                btnXacNhanCapNhat.value = khuyenMai.MaKhuyenMai;
+
+// Nếu khuyến mãi đã hết hạn, thêm thuộc tính disabled cho tất cả các trường
 
             }
         })
@@ -297,6 +310,9 @@ document.addEventListener('DOMContentLoaded', async function (){
             if(data.status === 'success'){
                 window.location.href = './khuyen-mai'
             }
+            else{
+                alert(data.message)
+            }
         }
         catch (error){
             console.error('Fetch error: ', error)
@@ -367,16 +383,34 @@ document.addEventListener('DOMContentLoaded', async function (){
     comboboxTimKiem.onchange = function (){
         timKiemKhuyenMai()
     }
-
+    comboboxDanhSachTuTrangThai.onchange = async function (){
+        try{
+            const response = await fetch(`./fetch/danh-sach-khuyen-mai-theo-trang-thai-${this.value}`)
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            const data = await response.json()
+            listKhuyenMaiGoc = []
+            if(data != null){
+                listKhuyenMaiGoc = Array.from(data)
+                renderKhuyenMai(listKhuyenMaiGoc)
+            }
+        }
+        catch (error){
+            console.log('Fetch error: ',error)
+        }
+    }
     try{
-        const response = await fetch('./fetch/danh-sach-khuyen-mai')
+        const response = await fetch(`./fetch/danh-sach-khuyen-mai-theo-trang-thai-${1}`)
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
         }
         const data = await response.json()
 
-        listKhuyenMaiGoc = Array.from(data)
-        renderKhuyenMai(listKhuyenMaiGoc)
+        if(data != null){
+            listKhuyenMaiGoc = Array.from(data)
+            renderKhuyenMai(listKhuyenMaiGoc)
+        }
     }
     catch (error){
         console.log('Fetch error: ',error)

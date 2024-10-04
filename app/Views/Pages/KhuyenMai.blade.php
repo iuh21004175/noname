@@ -20,25 +20,32 @@
                 <button class="btn btn-outline-success w-auto" data-bs-toggle="modal" data-bs-target="#form-themKhuyenMai">Thêm khuyến mãi</button>
             </div>
         </nav>
-        <div class="mt-3 overflow-scroll" style="height: 500px">
-            <table class="table table-bordered table-hover" id="table-khuyenMai">
-                <thead class="table-light">
-                <tr>
-                    <th>STT</th>
-                    <th>Mã khuyễn mãi</th>
-                    <th>Chủ đề</th>
-                    <th>Phần trăm</th>
-                    <th>Thời gian bắt đầu</th>
-                    <th>Thời gian kết thúc</th>
-                    <th>Thao tác</th>
-                </tr>
-                </thead>
-                <tbody>
+        <div class="mt-3">
+        <h4 class="d-inline-block mb-0">Danh sách đồ ăn và đồ uống</h4>
+            <select name="combobox-danhSachTuTrangThai" id="combobox-danhSachTuTrangThai">
+                <option value="0">Hết hạn</option>
+                <option value="1" selected>Chưa tới hạn</option>
+            </select>
+            <div class="mt-3 overflow-scroll" style="height: 500px">
+                <table class="table table-bordered table-hover" id="table-khuyenMai">
+                    <thead class="table-light">
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã khuyễn mãi</th>
+                        <th>Chủ đề</th>
+                        <th>Phần trăm</th>
+                        <th>Thời gian bắt đầu</th>
+                        <th>Thời gian kết thúc</th>
+                        <th>Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-                </tbody>
-            </table>
-            <div class="d-none" id="message-khuyenMai">
-                Không có khuyến mãi
+                    </tbody>
+                </table>
+                <div class="d-none" id="message-khuyenMai">
+                    Không có khuyến mãi
+                </div>
             </div>
         </div>
     </div>
@@ -119,7 +126,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <label class="form-label">Chủ để: <span class="text-danger" id="message-errorCapNhatChuDe"></span> </label>
-                                <input type="text" class="form-control" id="txt-CapNhatChuDe" name="txt-CapNhatChuDe">
+                                <input type="text" class="form-control" id="txt-CapNhatChuDe" name="txt-CapNhatChuDe" disabled>
                             </div>
                             <div class="row">
                                 <label class="form-label">Phần trăm: </label>

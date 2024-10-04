@@ -1,0 +1,24 @@
+<?php $_shouldextend[1]=1; ?>
+<?php $this->startSection('title', 'Thực đơn chi tiết'); ?>
+<?php $this->startSection('content'); ?>
+ <div>
+ <a href="./thuc-don">Quản lý thực đơn</a>
+ <h4 class="text-center">Thực đơn chi tiết</h4>
+ <div class="row">
+ <?php if($doAnUong != null): ?>
+ <p>Mã: <?php echo \htmlentities($doAnUong['MaDoAnUong']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <p>Tên: <?php echo \htmlentities($doAnUong['Ten']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <p>Giá: <?php echo \htmlentities($doAnUong['Gia']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <p>Loại: <?php echo \htmlentities($doAnUong['Loai']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <p>Mô tả: <?php echo \htmlentities($doAnUong['MoTa'] != null ? $doAnUong['MoTa'] : ''??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <p>Trạng thái: <?php echo \htmlentities($doAnUong['TrangThai'] == 1 ? 'đang bán' : 'tạm ngưng'??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <p>Người quản lý: <?php echo \htmlentities($nhanVien['TenNhanVien']??'', ENT_QUOTES, 'UTF-8', false); ?> | Mã nhân viên: <?php echo \htmlentities($nhanVien['MaNhanVien']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <?php else: ?>
+ <p>Món ăn không tồn tại</p>
+ <?php endif; ?>
+ </div>
+ 
+ </div>
+<?php $this->stopSection(); ?>
+
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('Content'); } ?>

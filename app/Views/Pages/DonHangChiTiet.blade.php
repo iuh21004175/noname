@@ -23,15 +23,17 @@
                         <td>STT</td>
                         <td>Món ăn</td>
                         <td>Số lượng</td>
+                        <td>Ghi chú</td>
                     </tr>
                 </thead>
                 <tbody>
                     @php $stt = 1; @endphp
-                    @foreach($monAns as $monAn)
+                    @foreach($doAnUongs as $doAnUong)
                         <tr>
                             <td>{{$stt++}}</td>
-                            <td>{{$monAn['TenMonAn']}}</td>
-                            <td>{{$monAn['SoLuong']}}</td>
+                            <td>{{$doAnUong['Ten']}}</td>
+                            <td>{{$doAnUong['SoLuong']}}</td>
+                            <td>{{$doAnUong['GhiChu']}}</td>
                         </tr>
                     @endforeach
                 </tbody>

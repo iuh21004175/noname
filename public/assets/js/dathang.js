@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     const txtKM = document.querySelector('#txt-khuyenMai')
     const eTxtTichDiem = document.querySelector('#txt-tichDiem')
     const btnTaoDH = document.querySelector('#btn-taoDH')
+
     let danhSachMAnMenu = []
     let danhSachGoc = [];
     let eTongTien = document.querySelector('.tongTienDH')
@@ -19,9 +20,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     let ktDonHang = false
     async function apDungKM(){
         try {
-            let eMonAnDHs = eBangDanhSachMAnDH.querySelectorAll('.btn-bo')
+            let btnBoS = eBangDanhSachMAnDH.querySelectorAll('.btn-bo')
 
-            const response = await fetch(`./fetch/dieu-kien-khuyen-mai-${eMonAnDHs.length}`)
+            const response = await fetch(`./fetch/dieu-kien-khuyen-mai-${btnBoS.length}`)
             if (!response.ok) {
                 throw new Error('Network response was not ok ' + response.statusText);
             }
@@ -44,9 +45,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
     function tinhTongTien(){
 
-        let eMonAnDHs = eBangDanhSachMAnDH.querySelectorAll('.btn-bo')
+        let btnBoS = eBangDanhSachMAnDH.querySelectorAll('.btn-bo')
         let tongTien = 0
-        eMonAnDHs.forEach(function (element, index){
+        btnBoS.forEach(function (element, index){
             let soLuong = element.closest('tr').querySelector('.inputSL').value;
             let donGia = element.closest('tr').querySelector('.giaMA')
             donGia = donGia.textContent
@@ -60,11 +61,11 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
     function renderDanhSachMAnMenu(ds) {
         eBangDanhSachMAnMenu.innerHTML = '';
-        ds.forEach(function (monAn) {
+        ds.forEach(function (doAnUong) {
             const newRow = `<tr>
-                                <td>${monAn.TenMonAn}</td>
-                                <td>${monAn.Gia}</td>
-                                <td><button type="button" value="${monAn.MaMonAn}">Chọn</button></td>
+                                <td>${doAnUong.Ten}</td>
+                                <td>${doAnUong.Gia}</td>
+                                <td><button type="button" value="${doAnUong.MaDoAnUong}">Chọn</button></td>
                             </tr>`;
             eBangDanhSachMAnMenu.innerHTML += newRow;
         });
@@ -73,14 +74,12 @@ document.addEventListener('DOMContentLoaded', async function () {
         let eMonAnMenus = eBangDanhSachMAnMenu.querySelectorAll('button');
         eMonAnMenus.forEach(function (element) {
             element.onclick = function () {
-                let indexMonAn = ds.findIndex(item => item.MaMonAn === parseInt(element.value));
-                let monAnDaXoa = ds.splice(indexMonAn, 1); // Lấy phần tử bị xóa
-
-
+                let indexDoAnUong = ds.findIndex(item => item.MaDoAnUong === element.value);
+                let doAnUongDaXoa = ds.splice(indexDoAnUong, 1); // Lấy phần tử bị xóa
                 renderDanhSachMAnMenu(ds); // Render lại danh sách sau khi xóa
-                renderDanhSachMAnDH(monAnDaXoa[0])
+                renderDanhSachMAnDH(doAnUongDaXoa[0])
                 ktDonHang = true
-                if(ktKhachHang === true && ktDonHang === true) {
+                if(ktKhachHang && ktDonHang ) {
                     eKMTD.classList.remove('d-none')
                 }
                 else {
@@ -91,34 +90,38 @@ document.addEventListener('DOMContentLoaded', async function () {
             };
         });
     }
-    function renderDanhSachMAnDH(monAn){
-
+    function renderDanhSachMAnDH(doAnUong){
         const newRow = document.createElement('tr');
-        let eMonAnDHs = eBangDanhSachMAnDH.querySelectorAll('.btn-bo')
+        let btnBoS = eBangDanhSachMAnDH.querySelectorAll('.btn-bo')
         newRow.style.cursor = 'pointer'
         newRow.innerHTML =  `
-                            <td>${eMonAnDHs.length + 1}</td>
-                            <td>${monAn.TenMonAn}</td>
+                            <td>${btnBoS.length + 1}</td>
+                            <td>${doAnUong.Ten}</td>
                             <td>
                                 <div class="input-group">
                                     <button type="button" class="btn-tru">-</button>
-                                    <input class="inputSL" type="text" value="1">
+                                    <input class="inputSL" type="text" value="1" style="width: 50px">
                                     <button type="button" class="btn-cong">+</button>
                                 </div>
                             </td>
-                            <td class="giaMA">${monAn.Gia}</td>
+                           
+                            <td>${doAnUong.DonVi}</td>
+                            <td class="giaMA">${doAnUong.Gia}</td>
+                             <td>
+                                <textarea class="txt-ghiChu form-control"  rows="2"></textarea>
+                            </td>
                             <td>
-                                <button type="button" value="${monAn.MaMonAn}" class="btn-bo">Chọn</button>
+                                <button type="button" value="${doAnUong.MaDoAnUong}" class="btn-bo">Chọn</button>
                             </td>
                         `;
         eBangDanhSachMAnDH.appendChild(newRow);
 
-        eMonAnDHs = eBangDanhSachMAnDH.querySelectorAll('.btn-bo')
-        eMonAnDHs.forEach(function (element, index){
+        btnBoS = eBangDanhSachMAnDH.querySelectorAll('.btn-bo')
+        btnBoS.forEach(function (element, index){
             element.onclick = async function (){
-                let indexMonAn = danhSachGoc.findIndex(item => item.MaMonAn === parseInt(element.value));
+                let indexDoAnUong = danhSachGoc.findIndex(item => item.MaDoAnUong === element.value);
                 let danhSachCopy = Array.from(danhSachGoc)
-                let monAnDaXoa = danhSachCopy.splice(indexMonAn, 1); // Lấy phần tử bị xóa
+                let doAnUongDaXoa = danhSachCopy.splice(indexDoAnUong, 1); // Lấy phần tử bị xóa
 
 
                 let row = this.closest('tr');
@@ -126,8 +129,8 @@ document.addEventListener('DOMContentLoaded', async function () {
                 if (row) {
                     row.remove(); // Xóa thẻ <tr> khỏi DOM
                 }
-                eMonAnDHs = eBangDanhSachMAnDH.querySelectorAll('.btn-bo')
-                danhSachMAnMenu.push(...monAnDaXoa); // Chuyển món ăn bị xóa vào mảng khác
+                btnBoS = eBangDanhSachMAnDH.querySelectorAll('.btn-bo')
+                danhSachMAnMenu.push(...doAnUongDaXoa); // Chuyển món ăn bị xóa vào mảng khác
                 renderDanhSachMAnMenu(danhSachMAnMenu)
 
                 if(danhSachMAnMenu.length === danhSachGoc.length){
@@ -285,17 +288,18 @@ document.addEventListener('DOMContentLoaded', async function () {
         tinhTongTien()
     }
     btnTaoDH.onclick = async function (){
-        let eMonAnDHs = eBangDanhSachMAnDH.querySelectorAll('.btn-bo')
+        let btnBoS = eBangDanhSachMAnDH.querySelectorAll('.btn-bo')
         let newObjDonHang = {
             'SoDienThoai' :eTxtSoDT.value.length === 10 ? eTxtSoDT.value : null,
             'TichDiem': eTxtTichDiem.value,
             'MaKhuyenMai': maKhuyenMai,
-            'DanhSachMA': [],
+            'DanhSachDAU': [],
             'TongTien':eTongTien.value
         }
-        eMonAnDHs.forEach(function (element){
+        btnBoS.forEach(function (element){
             let soLuong = element.closest('tr').querySelector('.inputSL').value;
-            newObjDonHang.DanhSachMA.push({'MaMonAn': element.value, 'SoLuong': soLuong})
+            let ghiChu = element.closest('tr').querySelector('.txt-ghiChu').value
+            newObjDonHang.DanhSachDAU.push({'MaDoAnUong': element.value, 'SoLuong': soLuong, 'GhiChu': ghiChu})
         })
         try {
             let response = await fetch('./fetch/them-don-hang',{

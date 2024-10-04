@@ -5,8 +5,8 @@ use App\Controllers\CtrlDangNhap;
 use App\Controllers\CtrlDonHang;
 use App\Controllers\CtrlKhachHang;
 use App\Controllers\CtrlKhuyenMai;
-use App\Controllers\CtrlMonAn;
 use App\Controllers\CtrlNhanVien;
+use App\Controllers\CtrlThucDon;
 use App\Controllers\CtrlTrangChu;
 use FastRoute\RouteCollector;
 use FastRoute\Dispatcher;
@@ -16,7 +16,6 @@ class Web
 {
     public function __construct()
     {
-        new Database();
         $dispatcher = simpleDispatcher(function(RouteCollector $r) {
             $r->addRoute('GET', '/dang-nhap', function () {
                 $ctrl = new CtrlDangNhap();
@@ -55,12 +54,12 @@ class Web
                 return $ctrl->pageKhuyenMaiChiTiet($maKhuyenMai);
             });
             $r->addRoute('GET', '/thuc-don', function () {
-                $ctrl = new CtrlMonAn();
+                $ctrl = new CtrlThucDon();
                 return $ctrl->index();
             });
-            $r->addRoute('GET', '/mon-an-chi-tiet-{maMonAn}', function ($maMonAn) {
-                $ctrl = new CtrlMonAn();
-                return $ctrl->pageMonAnChiTiet($maMonAn);
+            $r->addRoute('GET', '/thuc-don-chi-tiet-{maDoAnUong}', function ($maDoAnUong) {
+                $ctrl = new CtrlThucDon();
+                return $ctrl->pageThucDonChiTiet($maDoAnUong);
             });
             $r->addRoute('GET', '/nhan-vien', function () {
                 $ctrl = new CtrlNhanVien();

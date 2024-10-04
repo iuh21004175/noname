@@ -20,24 +20,28 @@
                 <a href="./tao-don-hang" class="btn btn-outline-success w-auto">Tạo đơn hàng</a>
             </div>
         </nav>
-        <div class="mt-3 overflow-scroll" style="height: 500px">
-            <table class="table table-striped table-hover table-bordered" id="table-donHang">
-                <thead class="table-light sticky-top">
-                <tr>
-                    <th scope="col">STT</th>
-                    <th scope="col">Mã đơn hàng</th>
-                    <th scope="col">Số điện thoại</th>
-                    <th scope="col">Ngày lập</th>
-                    <th scope="col">Tổng tiền</th>
-                    <th scope="col">Thao tác</th>
-                </tr>
-                </thead>
-                <tbody>
-                <!-- Thêm các hàng dữ liệu ở đây -->
-                </tbody>
-            </table>
-            <div class="d-none" id="message-donHang">
-                Không có đơn hàng
+        <div class="mt-3">
+            <h4 class="d-inline-block mb-0">Danh sách đơn hàng</h4>
+            từ <input type="date" id="txt-MocNgayBatDau"> đến <input type="date" id="txt-MocNgayKetThuc">
+            <div class="mt-3 overflow-scroll" style="height: 500px">
+                <table class="table table-striped table-hover table-bordered" id="table-donHang">
+                    <thead class="table-light sticky-top">
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Mã đơn hàng</th>
+                        <th scope="col">Số điện thoại</th>
+                        <th scope="col">Ngày lập</th>
+                        <th scope="col">Tổng tiền</th>
+                        <th scope="col">Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Thêm các hàng dữ liệu ở đây -->
+                    </tbody>
+                </table>
+                <div class="d-none" id="message-donHang">
+                    Không có đơn hàng
+                </div>
             </div>
         </div>
     </div>

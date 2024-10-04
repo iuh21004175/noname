@@ -29,9 +29,9 @@ document.addEventListener('DOMContentLoaded', async function (){
     const messageErrorCapNhatSoDienThoai = document.querySelector('#message-errorCapNhatSoDienThoai')
     const messageErrorCapNhatEmail = document.querySelector('#message-errorCapNhatEmail')
     
-
-    const comboboxCapNhatLoaiNhanVien = document.querySelector('#combobox-CapNhatLoaiNhanVien')
     const comboboxTimkiem = document.querySelector('#combobox-timKiem')
+    const comboboxDanhSachTuTrangThai = document.querySelector('#combobox-danhSachTuTrangThai')
+    const comboboxCapNhatTrangThai = document.querySelector('#combobox-CapNhatTrangThai')
 
     let hopLeThemTen = false
     let hopLeThemNgaySinh = false
@@ -52,14 +52,19 @@ document.addEventListener('DOMContentLoaded', async function (){
             messageNhanVien.classList.add('d-none')
             list.forEach(function (nhanVien, index){
                 let newRow = document.createElement('tr')
+                let xoaButton = ''
+                if (nhanVien.TenLoaiNhanVien !== 'Quản lý' && nhanVien.TrangThai !== 1){
+                    xoaButton = `<button class="btn btn-outline-danger btn-xoa" data-bs-toggle="modal" data-bs-target="#message-xoa" value="${nhanVien.MaNhanVien}">Xóa</button>`
+                }
                 newRow.innerHTML = `
                 <td >${index + 1}</td>
                 <td>${nhanVien.MaNhanVien}</td>
                 <td>${nhanVien.TenNhanVien}</td>
                 <td>${nhanVien.TenLoaiNhanVien}</td>
+                <td>${nhanVien.TrangThaiHoatDong}</td>
                 <td>
                     <a href="./nhan-vien-chi-tiet-${nhanVien.MaNhanVien}" class="btn btn-light">Xem</a>
-                    <button class="btn btn-outline-danger btn-xoa" data-bs-toggle="modal" data-bs-target="#message-xoa" value="${nhanVien.MaNhanVien}">Xóa</button>
+                    ${xoaButton}
                     <button class="btn btn-outline-primary btn-capNhat" data-bs-toggle="modal" data-bs-target="#form-capNhat" value="${nhanVien.MaNhanVien}">Cập nhật</button>
                 </td>
             `
@@ -105,13 +110,14 @@ document.addEventListener('DOMContentLoaded', async function (){
         btnCapNhatS.forEach(function (btn, index){
             btn.onclick = function (){
                 maCapNhatNhanVien = this.value
-                let nhanvien = listNhanVienGoc.find(nv => nv.MaNhanVien === parseInt(maCapNhatNhanVien))
+                let nhanvien = listNhanVienGoc.find(nv => nv.MaNhanVien === maCapNhatNhanVien)
                 txtCapNhatTen.value = nhanvien.TenNhanVien
                 txtCapNhatNgaySinh.value = nhanvien.NgaySinh
                 txtCapNhatSoDienThoai.value = nhanvien.SoDienThoai
                 txtCapNhatDiaChi.value = nhanvien.DiaChi
                 txtCapNhatEmail.value = nhanvien.Email
                 txtCapNhatGhiChu.value = nhanvien.GhiChu
+                comboboxCapNhatTrangThai.value = nhanvien.TrangThai
                 btnXacNhanCapNhat.value = this.value
             }
         })
@@ -201,7 +207,7 @@ document.addEventListener('DOMContentLoaded', async function (){
                 hopLeCapNhatSoDienThoai = false
             }
             else {
-                let nhanvien = listNhanVienGoc.find(nv => nv.MaNhanVien === parseInt(maCapNhatNhanVien))
+                let nhanvien = listNhanVienGoc.find(nv => nv.MaNhanVien === maCapNhatNhanVien)
                 
                 if(listNhanVienGoc.find(nv => nv.SoDienThoai === txtCapNhatSoDienThoai.value)&& nhanvien.SoDienThoai !== txtCapNhatSoDienThoai.value){
                     messageErrorCapNhatSoDienThoai.innerHTML = 'Số điện thoại này đã được sử dụng'
@@ -216,11 +222,8 @@ document.addEventListener('DOMContentLoaded', async function (){
         }
     }
     function kiemTraCapNhatEmail(){
-        if(txtCapNhatEmail.value.trim() === ''){
-            messageErrorCapNhatEmail.innerHTML = 'Không được để trống'
-            hopLeCapNhatEmail = false
-        }
-        else{
+
+        if(txtCapNhatEmail.value.trim() !== ''){
             const emailPattern = /^[^\s@]+@gmail\.com$/;
             if (!emailPattern.test(txtCapNhatEmail.value)) {
                 messageErrorCapNhatEmail.innerHTML = 'Email không hợp lệ, chỉ chấp nhận email @gmail.com';
@@ -231,6 +234,9 @@ document.addEventListener('DOMContentLoaded', async function (){
                 hopLeCapNhatEmail = true
             }
            
+        }
+        else{
+            hopLeCapNhatEmail = true
         }
     }
     function timKiemNhanVien(){
@@ -296,7 +302,13 @@ document.addEventListener('DOMContentLoaded', async function (){
             }
             const data = await response.json()
             if(data.status === 'success'){
+                if(data.message !==undefined){
+                    alert(data.message)
+                }
                 window.location.href = './nhan-vien'
+            }
+            else{
+                alert(data.message)
             }
         }
         catch (error){
@@ -320,6 +332,7 @@ document.addEventListener('DOMContentLoaded', async function (){
         }
     }
     btnXacNhanCapNhat.onclick = function(){
+        console.log(111)
         kiemTraCapNhatTen()
         kiemTraCapNhatNgaySinh()
         kiemTraCapNhatSoDienThoai()
@@ -334,6 +347,7 @@ document.addEventListener('DOMContentLoaded', async function (){
                 'DiaChi': txtCapNhatDiaChi.value,
                 'Email': txtCapNhatEmail.value,
                 'GhiChu': txtCapNhatGhiChu.value,
+                'TrangThai': comboboxCapNhatTrangThai.value
             }
             capNhatNhanVien(nhanVien)
         }
@@ -380,15 +394,35 @@ document.addEventListener('DOMContentLoaded', async function (){
     comboboxTimkiem.onchange = function(){
         timKiemNhanVien()
     }
+    comboboxDanhSachTuTrangThai.onchange = async function (){
+        try{
+            const response = await fetch(`./fetch/danh-sach-nhan-vien-theo-trang-thai-${this.value}`)
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            const data = await response.json()
+            listNhanVienGoc = []
+            if(data != null){
+                listNhanVienGoc = Array.from(data)
+                renderNhanVien(listNhanVienGoc)
+            }
+        }
+        catch (error){
+            console.log('Fetch error: ',error)
+        }
+    }
     try{
-        const response = await fetch('./fetch/danh-sach-nhan-vien')
+        const response = await fetch(`./fetch/danh-sach-nhan-vien-theo-trang-thai-${1}`)
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
         }
         const data = await response.json()
 
-        listNhanVienGoc = Array.from(data)
-        renderNhanVien(listNhanVienGoc)
+        listNhanVienGoc = []
+        if(data != null){
+            listNhanVienGoc = Array.from(data)
+            renderNhanVien(listNhanVienGoc)
+        }
     }
     catch (error){
         console.log('Fetch error: ',error)
