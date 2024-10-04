@@ -116,7 +116,7 @@
                         <div class="container-fluid overflow-auto" style="height: 500px;">
                             <div class="row">
                                 <label class="form-label">Tên nhân viên: <span class="text-danger" id="message-errorCapNhatTen"></span> </label>
-                                <input type="text" class="form-control" id="txt-CapNhatTen" name="txt-CapNhatTen">
+                                <input type="text" class="form-control" id="txt-CapNhatTen" name="txt-CapNhatTen" disabled>
                             </div>
                             <div class="row">
                                 <label class="form-label">Ngày sinh: <span class="text-danger" id="message-errorCapNhatNgaySinh"></span> </label>

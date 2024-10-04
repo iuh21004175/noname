@@ -111,6 +111,7 @@ document.addEventListener('DOMContentLoaded', async function (){
             btn.onclick = function (){
                 maCapNhatNhanVien = this.value
                 let nhanvien = listNhanVienGoc.find(nv => nv.MaNhanVien === maCapNhatNhanVien)
+                let isValid = nhanvien.TrangThai === 0
                 txtCapNhatTen.value = nhanvien.TenNhanVien
                 txtCapNhatNgaySinh.value = nhanvien.NgaySinh
                 txtCapNhatSoDienThoai.value = nhanvien.SoDienThoai
@@ -119,6 +120,13 @@ document.addEventListener('DOMContentLoaded', async function (){
                 txtCapNhatGhiChu.value = nhanvien.GhiChu
                 comboboxCapNhatTrangThai.value = nhanvien.TrangThai
                 btnXacNhanCapNhat.value = this.value
+                if(isValid){
+                    txtCapNhatNgaySinh.disabled = true
+                    txtCapNhatSoDienThoai.disabled = true
+                    txtCapNhatDiaChi.disabled = true
+                    txtCapNhatEmail.disabled = true
+                    txtCapNhatGhiChu.disabled = true
+                }
             }
         })
     }
