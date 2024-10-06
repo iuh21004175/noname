@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded',  function (){
                 if (data.status === 'success') {
                     window.location.href='./'
                 } else {
-                    alert('Sai tên đăng nhập hoặc mật khẩu.');
+                    alert(data.message);
                 }
             } catch (error) {
                 console.error('There has been a problem with your fetch operation:', error);

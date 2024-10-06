@@ -85,6 +85,7 @@ document.addEventListener('DOMContentLoaded', async function (){
             }
         })
         btnXacNhanXoa.onclick = async function (){
+
             try {
                 const response = await fetch('./fetch/xoa-nhan-vien', {
                     method: 'POST',
@@ -99,6 +100,9 @@ document.addEventListener('DOMContentLoaded', async function (){
                 const data = await response.json()
                 if(data.status === 'success'){
                     window.location.href = './nhan-vien'
+                }
+                else {
+                    alert(data.message)
                 }
             }
             catch (error){

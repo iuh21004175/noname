@@ -13,6 +13,8 @@
             <p>Số điện thoại: {{$nhanVien['SoDienThoai']}}</p>
             <p>Email: {{$nhanVien['Email'] != null ? $nhanVien['Email']:''}}</p>
             <p>Ghi chú: {{$nhanVien['GhiChu'] != null ? $nhanVien['GhiChu']:''}}</p>
+            <p>Trạng thái: {{$nhanVien['TrangThai'] == 1 ? 'Hoạt động' : 'Tạm ngưng'}}</p>
+            <p>Trạng thái hoạt động: {{$nhanVien['TrangThaiHoatDong']}}</p>
         </div>
 
     </div>

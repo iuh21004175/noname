@@ -1,5 +1,5 @@
 <?php $_shouldextend[1]=1; ?>
-<?php $this->startSection('title', 'Đơn hàng'); ?>
+<?php $this->startSection('title', 'Quản lý đơn hàng'); ?>
 <?php $this->startSection('content'); ?>
  <div class="">
  <nav class="row pe-0">

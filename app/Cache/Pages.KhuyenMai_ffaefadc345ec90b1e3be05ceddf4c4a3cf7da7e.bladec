@@ -21,7 +21,7 @@
  </div>
  </nav>
  <div class="mt-3">
- <h4 class="d-inline-block mb-0">Danh sách đồ ăn và đồ uống</h4>
+ <h4 class="d-inline-block mb-0">Danh sách khuyến mãi</h4>
  <select name="combobox-danhSachTuTrangThai" id="combobox-danhSachTuTrangThai">
  <option value="0">Hết hạn</option>
  <option value="1" selected>Chưa tới hạn</option>

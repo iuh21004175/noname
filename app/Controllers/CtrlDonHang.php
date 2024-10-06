@@ -128,7 +128,7 @@ class CtrlDonHang extends Controller
         $donHang = DonHang::where('MaDonHang', $maDonHang)->first();
         if($donHang['TrangThai'] == 0){
             // If the order exists and 'MaKhachHang' is not null, proceed to update loyalty points
-            if ($donHang && $donHang['MaKhachHang'] != null) {
+            if ($donHang['MaKhachHang'] != null) {
                 // Find the customer associated with the order
                 $khachHang = KhachHang::where('MaKhachHang', $donHang['MaKhachHang'])->first();
 

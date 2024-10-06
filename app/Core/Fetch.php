@@ -2,7 +2,9 @@
 
 namespace App\Core;
 
+use App\Controllers\CtrlCapNhatThongTinCaNhan;
 use App\Controllers\CtrlDangNhap;
+use App\Controllers\CtrlDangXuat;
 use App\Controllers\CtrlDonHang;
 use App\Controllers\CtrlKhachHang;
 use App\Controllers\CtrlKhuyenMai;
@@ -24,7 +26,7 @@ class Fetch
                 echo json_encode($ctrl->dangNhap($data['username'], $data['password']));
             });
             if(isset($_SESSION['user_id'])){
-                $r->addRoute('GET', '/dat-hang', function () {
+                $r->addRoute('GET', '/danh-sach-do-an-uong', function () {
                     $ctrl = new CtrlDonHang();
                     echo json_encode($ctrl->layDanhSachDoAnUong());
                 });
@@ -119,13 +121,13 @@ class Fetch
                     echo json_encode($ctrl->capNhatNhanVien($data));
                 });
                 $r->addRoute('POST', '/cap-nhat-thong-tin-ca-nhan', function () {
-                    $ctrl = new CtrlDangNhap();
+                    $ctrl = new CtrlCapNhatThongTinCaNhan();
                     $json = file_get_contents('php://input');
                     $data = json_decode($json, true);
                     echo json_encode($ctrl->capNhatThongTinCaNhan($data));
                 });
                 $r->addRoute('POST', '/dang-xuat', function () {
-                    $ctrl = new CtrlDangNhap();
+                    $ctrl = new CtrlDangXuat();
                     echo json_encode($ctrl->dangXuat());
                 });
                 $r->addRoute('GET', '/danh-sach-do-an-uong-theo-trang-thai-{trangThai}', function ($trangThai) {

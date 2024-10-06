@@ -29,6 +29,9 @@ document.addEventListener('DOMContentLoaded', function (){
             if(data.status === 'success'){
                 window.location.href = './thong-tin-ca-nhan'
             }
+            else{
+                alert(data.message)
+            }
         }
         catch (error){
             console.error('Fetch error: ', error)

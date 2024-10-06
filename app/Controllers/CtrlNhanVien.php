@@ -133,7 +133,7 @@ class CtrlNhanVien extends Controller
             }
         }
         else{
-            return array('status' => 'fail', 'message' => 'Nhân viên đã quản lý đã quản lý đối tượng của hệ thống');
+            return array('status' => 'fail', 'message' => 'Nhân viên vẫn còn quản lý các đối tượng của hệ thống');
         }
     }
 }

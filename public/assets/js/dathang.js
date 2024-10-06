@@ -1,12 +1,13 @@
 document.addEventListener('DOMContentLoaded', async function () {
-    const eBangDanhSachMAnMenu = document.querySelector('#danhSachMA tbody');
-    const eBangDanhSachMAnDH = document.querySelector('#danhSachMAnDH tbody')
+    let eBangDanhSachMAnMenu = document.querySelector('#danhSachMA tbody');
+    let eBangDanhSachMAnDH = document.querySelector('#danhSachMAnDH tbody')
     const eTxtSoDT = document.querySelector('#txt-soDT')
-    const btnKM = document.querySelector('#btn-apKM')
     const eKMTD = document.querySelector('#khuyenMai-tichDiem')
     const txtKM = document.querySelector('#txt-khuyenMai')
     const eTxtTichDiem = document.querySelector('#txt-tichDiem')
     const btnTaoDH = document.querySelector('#btn-taoDH')
+    const txtSoTienKhachHang = document.querySelector('#txt-soTienKhachHang')
+    const txtTinhTien = document.querySelector('#txt-tienThoi')
 
     let danhSachMAnMenu = []
     let danhSachGoc = [];
@@ -15,33 +16,37 @@ document.addEventListener('DOMContentLoaded', async function () {
     let khuyenMai = 0
     let maKhuyenMai = null
     let tongTienGoc = 0
+    let tongTienThucTe = 0
     let tichDiemKH = 0
     let ktKhachHang = false
     let ktDonHang = false
     async function apDungKM(){
-        try {
-            let btnBoS = eBangDanhSachMAnDH.querySelectorAll('.btn-bo')
+        if(ktKhachHang){
+            try {
+                eBangDanhSachMAnDH = document.querySelector('#danhSachMAnDH tbody')
+                let btnBoS = eBangDanhSachMAnDH.querySelectorAll('.btn-bo')
+                const response = await fetch(`./fetch/dieu-kien-khuyen-mai-${btnBoS.length}`)
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                let data = await response.json()
+                if(data !== null){
+                    txtKM.value = data.ChuDe
+                    maKhuyenMai = data.MaKhuyenMai
+                    khuyenMai = parseFloat(data.PhanTram)
 
-            const response = await fetch(`./fetch/dieu-kien-khuyen-mai-${btnBoS.length}`)
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            let data = await response.json()
+                }
+                else {
+                    maKhuyenMai = null
+                    txtKM.value = ''
 
-            if(data !== null){
-                txtKM.value = data.ChuDe
-                maKhuyenMai = data.MaKhuyenMai
-                khuyenMai = parseFloat(data.PhanTram)
+                }
             }
-            else {
-                maKhuyenMai = null
-                txtKM.value = ''
+            catch (error){
+                console.error('Fetch error: ',error)
             }
+
         }
-        catch (error){
-            console.error('Fetch error: ',error)
-        }
-
     }
     function tinhTongTien(){
 
@@ -57,9 +62,10 @@ document.addEventListener('DOMContentLoaded', async function () {
         let giamGia = tichDiem * 1000 + khuyenMai * tongTienGoc
 
         tongTien = tongTienGoc - giamGia
+        tongTienThucTe = tongTien
         eTongTien.value = tongTien
     }
-    function renderDanhSachMAnMenu(ds) {
+    async function renderDanhSachMAnMenu(ds) {
         eBangDanhSachMAnMenu.innerHTML = '';
         ds.forEach(function (doAnUong) {
             const newRow = `<tr>
@@ -89,8 +95,10 @@ document.addEventListener('DOMContentLoaded', async function () {
                 tinhTongTien()
             };
         });
+        await apDungKM()
+        tinhTongTien()
     }
-    function renderDanhSachMAnDH(doAnUong){
+    async function renderDanhSachMAnDH(doAnUong){
         const newRow = document.createElement('tr');
         let btnBoS = eBangDanhSachMAnDH.querySelectorAll('.btn-bo')
         newRow.style.cursor = 'pointer'
@@ -150,7 +158,6 @@ document.addEventListener('DOMContentLoaded', async function () {
                     eTxtTichDiem.value= tichDiem
 
                 }
-                await apDungKM()
                 tinhTongTien()
 
             }
@@ -191,7 +198,8 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
         })
 
-
+        await apDungKM()
+        tinhTongTien()
     }
     async function getKhachHang(soDienThoai){
         const eThongTinKH = document.querySelector('#thongTinKH')
@@ -210,7 +218,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 ktKhachHang = true
                 tichDiemKH = data.TichDiem
                 eKH = `Họ và tên: ${data.TenKhachHang}</br>Tích điển: ${data.TichDiem}`
-
+                await apDungKM()
                 tinhTongTien()
             }
             else {
@@ -283,10 +291,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     });
 
-    btnKM.onclick = async function (){
-        await apDungKM()
-        tinhTongTien()
-    }
     btnTaoDH.onclick = async function (){
         let btnBoS = eBangDanhSachMAnDH.querySelectorAll('.btn-bo')
         let newObjDonHang = {
@@ -324,10 +328,27 @@ document.addEventListener('DOMContentLoaded', async function () {
             console.log('Fetch error: ', error)
         }
     }
+    txtSoTienKhachHang.oninput = function (){
+        let start = this.selectionStart;
+        let end = this.selectionEnd;
 
+        // Loại bỏ các ký tự không phải là số
+        let inputValue = this.value.replace(/[^0-9]/g, '');
+        this.value = inputValue || '';  // Nếu là NaN, đặt về chuỗi rỗng
+        // Cập nhật lại vị trí con trỏ
+        this.setSelectionRange(start, end);
+        tinhTongTien();
+        if(this.value === ''){
+            txtTinhTien.value = ''
+        }
+        else {
+            let tienThoi = parseInt(this.value) - tongTienThucTe
+            txtTinhTien.value = tienThoi
+        }
+    }
 
     try {
-        let response = await fetch('./fetch/dat-hang');
+        let response = await fetch('./fetch/danh-sach-do-an-uong');
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
         }

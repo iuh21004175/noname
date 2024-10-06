@@ -17,6 +17,8 @@
 
  </div>
  </div>
+ <div>
+ <h5>Danh sách đồ ăn và đồ uống</h5>
  <div class="overflow-scroll mb-2" style="min-height: 400px">
  <table class="table table-bordered" id="danhSachMAnDH">
  <thead class="table-light">
@@ -34,23 +36,25 @@
 
  </table>
  </div>
+ </div>
  <div id="khuyenMai-tichDiem" class="d-none">
  <div class="mb-2" id="khuyenMai">
- <b>Khuyến mãi (nếu có):  </b><input type="text" class="border-0" disabled id="txt-khuyenMai" name="txt-khuyenMai" style="width: 400px"> <input type="button" id="btn-apKM" value="Áp dụng">
+ <b>Khuyến mãi (nếu có):  </b><input type="text" class="border-0" disabled id="txt-khuyenMai" name="txt-khuyenMai" style="width: 400px">
  </div>
  <div class="mb-2" id="tichDiem">
  <b>Sử dụng tích điểm (tối đa 100): </b><input type="text" class="" id="txt-tichDiem" value="0">
  </div>
  </div>
  <div>
- <h3>Tổng tiền: <input type="number" class="tongTienDH border-0" value="0" disabled></h3>
+ <h5 >Tổng tiền: <input type="number" class="tongTienDH border-0" value="0" disabled></h5>
+ <h5 class="d-inline-block">Tính tiền thối: <input type="text" id="txt-soTienKhachHang" placeholder="Nhập số tiền"> Tiền thối <input type="text" id="txt-tienThoi" disabled></h5>
  </div>
  <input type="button" disabled id="btn-taoDH" value="Tạo đơn hàng">
  </form>
 
  </div>
  <div class="col-4">
- <h5>Danh sách món ăn</h5>
+ <h5>Thực đơn</h5>
  <div class="overflow-scroll" style="height: 600px">
  <table class="table table-hover table-bordered" id="danhSachMA">
  <thead class="table-light sticky-top">

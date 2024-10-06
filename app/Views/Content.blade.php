@@ -12,7 +12,7 @@
 <div class="container-fluid">
     @yield('content')
 </div>
-
+<script src="./public/assets/js/dangxuat.js"></script>
 <script src="./public/assets/js/popper.min.js"></script>
 <script src="./public/assets/js/bootstrap.min.js"></script>
 @yield('script')

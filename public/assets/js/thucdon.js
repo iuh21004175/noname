@@ -1,28 +1,26 @@
 document.addEventListener('DOMContentLoaded', async function (){
     let listDoAnUongGoc = []
     const tableDoAnUong = document.querySelector('#table-doAnUong tbody')
-    const btnThemDoAn = document.querySelector('#btn-themDoAn')
-    const btnThemDoUong = document.querySelector('#btn-themDoUong')
+    const btnThemDoAnDoUong = document.querySelector('#btn-themDoAnDoUong')
+    const btnThem = document.querySelector('#btnThem')
     const btnXacNhanXoa = document.querySelector('#btn-xacNhanXoa')
     const btnXacNhanCapNhatDoAn = document.querySelector('#btn-CapNhatDoAn')
     const btnXacNhanCapNhatDoUong = document.querySelector('#btn-CapNhatDoUong')
 
     const messageDoAnUong = document.querySelector('#message-doAnUong')
     const messageXoa = document.querySelector('#message-xoa')
-    const messageErrorThemTenDoAn = document.querySelector('#message-errorThemTenDoAn')
-    const messageErrorThemGiaDoAn = document.querySelector('#message-errorThemGiaDoAn')
-    const messageErrorThemTenDoUong = document.querySelector('#message-errorThemTenDoUong')
-    const messageErrorThemGiaDoUong = document.querySelector('#message-errorThemGiaDoUong')
+    const messageErrorThemTenDoAnDoUong = document.querySelector('#message-errorThemTenDoAnDoUong')
+    const messageErrorThemGiaDoAnDoUong = document.querySelector('#message-errorThemGiaDoAnDoUong')
+
     const messageErrorCapNhatTenDoAn = document.querySelector('#message-errorCapNhatTenDoAn')
     const messageErrorCapNhatGiaDoAn = document.querySelector('#message-errorCapNhatGiaDoAn')
     const messageErrorCapNhatTenDoUong = document.querySelector('#message-errorCapNhatTenDoUong')
     const messageErrorCapNhatGiaDoUong = document.querySelector('#message-errorCapNhatGiaDoUong')
 
     const txtTimKiem = document.querySelector('#txt-timKiem')
-    const txtThemTenDoAn = document.querySelector('#txt-ThemTenDoAn')
-    const txtThemGiaDoAn = document.querySelector('#txt-ThemGiaDoAn')
-    const txtThemTenDoUong = document.querySelector('#txt-ThemTenDoUong')
-    const txtThemGiaDoUong = document.querySelector('#txt-ThemGiaDoUong')
+    const txtThemTenDoAnDoUong = document.querySelector('#txt-ThemTenDoAnDoUong')
+    const txtThemGiaDoAnDoUong = document.querySelector('#txt-ThemGiaDoAnDoUong')
+
 
     const txtCapNhatTenDoAn = document.querySelector('#txt-CapNhatTenDoAn')
     const txtCapNhatGiaDoAn = document.querySelector('#txt-CapNhatGiaDoAn')
@@ -31,18 +29,17 @@ document.addEventListener('DOMContentLoaded', async function (){
     const txtCapNhatGiaDoUong = document.querySelector('#txt-CapNhatGiaDoUong')
     const txtCapNhatMoTaDoUong = document.querySelector('#txt-CapNhatMoTaDoUong')
 
-    const comboboxThemDonViDoAn = document.querySelector('#combobox-ThemDonViDoAn')
-    const comboboxThemDonViDoUong = document.querySelector('#combobox-ThemDonViDoUong')
+    const comboboxThemDonViDoAnDoUong = document.querySelector('#combobox-ThemDonViDoAnDoUong')
+    const comboboxThemLoaiDoAnDoUong = document.querySelector('#combobox-ThemLoaiDoAnDoUong')
     const comboboxCapNhatDonViDoAn = document.querySelector('#combobox-CapNhatDonViDoAn')
     const comboboxCapNhatDonViDoUong = document.querySelector('#combobox-CapNhatDonViDoUong')
     const comboboxCapNhatTrangThaiDoAn = document.querySelector('#combobox-CapNhatTrangThaiDoAn')
     const comboboxCapNhatTrangThaiDoUong = document.querySelector('#combobox-CapNhatTrangThaiDoUong')
     const comboboxDanhSachTuTrangThai = document.querySelector('#combobox-danhSachTuTrangThai')
 
-    let hopLeThemTenDoAn = false
-    let hopLeThemGiaDoAn = false
-    let hopLeThemTenDoUong = false
-    let hopLeThemGiaDoUong = false
+    let hopLeThemTenDoAnDoUong = false
+    let hopLeThemGiaDoAnDoUong = false
+
     let hopLeCapNhatTenDoAn = false
     let hopLeCapNhatGiaDoAn = false
     let hopLeCapNhatTenDoUong = false
@@ -162,59 +159,33 @@ document.addEventListener('DOMContentLoaded', async function (){
             }
         })
     }
-    function kiemTraThemTenDoAn(){
-        if(txtThemTenDoAn.value === ''){
-            hopLeThemTenDoAn = false
-            messageErrorThemTenDoAn.innerHTML = 'Không được để trống'
+    function kiemTraThemTenDoAnDoUong(){
+        if(txtThemTenDoAnDoUong.value === ''){
+            hopLeThemTenDoAnDoUong = false
+            messageErrorThemTenDoAnDoUong.innerHTML = 'Không được để trống'
         }
         else{
-            hopLeThemTenDoAn = true
-            messageErrorThemTenDoAn.innerHTML = ''
+            hopLeThemTenDoAnDoUong = true
+            messageErrorThemTenDoAnDoUong.innerHTML = ''
         }
     }
-    function kiemTraThemGiaDoAn(){
-        if(txtThemGiaDoAn.value === ''){
-            hopLeThemGiaDoAn = false
-            messageErrorThemGiaDoAn.innerHTML = 'Không được để trống'
+    function kiemTraThemGiaDoAnDoUong(){
+        if(txtThemGiaDoAnDoUong.value === ''){
+            hopLeThemGiaDoAnDoUong = false
+            messageErrorThemGiaDoAnDoUong.innerHTML = 'Không được để trống'
         }
         else{
-            if(parseInt(txtThemGiaDoAn.value) % 1000 === 0){
-                hopLeThemGiaDoAn = true
-                messageErrorThemGiaDoAn.innerHTML = ''
+            if(parseInt(txtThemGiaDoAnDoUong.value) % 1000 === 0){
+                hopLeThemGiaDoAnDoUong = true
+                messageErrorThemGiaDoAnDoUong.innerHTML = ''
             }
             else{
-                hopLeThemGiaDoAn = false
-                messageErrorThemGiaDoAn.innerHTML = 'Giá đồ ăn phải tròn nghìn'
+                hopLeThemGiaDoAnDoUong = false
+                messageErrorThemGiaDoAnDoUong.innerHTML = 'Giá đồ ăn phải tròn nghìn'
             }
         }
     }
-    function kiemTraThemTenDoUong(){
-        if(txtThemTenDoUong.value === ''){
-            hopLeThemTenDoUong = false
-            messageErrorThemTenDoUong.innerHTML = 'Không được để trống'
-        }
-        else{
-            hopLeThemTenDoUong = true
-            messageErrorThemTenDoUong.innerHTML = ''
-        }
-    }
-    function kiemTraThemGiaDoUong(){
-        if(txtThemGiaDoUong.value === ''){
-            hopLeThemGiaDoUong = false
-            messageErrorThemGiaDoUong.innerHTML = 'Không được để trống'
-        }
-        else{
-            if(parseInt(txtThemGiaDoUong.value) % 1000 === 0){
-                hopLeThemGiaDoUong = true
-                messageErrorThemGiaDoUong.innerHTML = ''
-            }
-            else{
-                hopLeThemGiaDoUong = false
-                messageErrorThemGiaDoUong.innerHTML = 'Giá đồ uống phải tròn nghìn'
-            }
-        }
-    }
-
+    
     function kiemTraCapNhatTenDoAn(){
         if(txtCapNhatTenDoAn.value === ''){
             hopLeCapNhatTenDoAn = false
@@ -283,6 +254,7 @@ document.addEventListener('DOMContentLoaded', async function (){
         }
     }
     async function themDoAnUong(obj){
+
         try {
             const response = await fetch('./fetch/them-do-an-uong',{
                 method: 'POST',
@@ -330,30 +302,17 @@ document.addEventListener('DOMContentLoaded', async function (){
             console.error('Fetch error: ', error)
         }
     }
-    btnThemDoAn.onclick = function (){
-        kiemTraThemTenDoAn()
-        kiemTraThemGiaDoAn()
-        if(hopLeThemTenDoAn && hopLeThemGiaDoAn){
-            let newDoAn = {
-                'Ten': txtThemTenDoAn.value,
-                'Gia': txtThemGiaDoAn.value,
-                'DonVi': comboboxThemDonViDoAn.value,
-                'Loai': 'Đồ ăn'
+    btnThemDoAnDoUong.onclick = function (){
+        kiemTraThemTenDoAnDoUong()
+        kiemTraThemGiaDoAnDoUong()
+        if(hopLeThemTenDoAnDoUong && hopLeThemGiaDoAnDoUong){
+            let newDoAnDoUong = {
+                'Ten': txtThemTenDoAnDoUong.value,
+                'Gia': txtThemGiaDoAnDoUong.value,
+                'DonVi': comboboxThemDonViDoAnDoUong.value,
+                'Loai': comboboxThemLoaiDoAnDoUong.value
             }
-            themDoAnUong(newDoAn)
-        }
-    }
-    btnThemDoUong.onclick = function (){
-        kiemTraThemTenDoUong()
-        kiemTraThemGiaDoUong()
-        if(hopLeThemTenDoUong && hopLeThemGiaDoUong){
-            let newDoUong = {
-                'Ten': txtThemTenDoUong.value,
-                'Gia': txtThemGiaDoUong.value,
-                'DonVi': comboboxThemDonViDoUong.value,
-                'Loai': 'Đồ uống'
-            }
-            themDoAnUong(newDoUong)
+            themDoAnUong(newDoAnDoUong)
         }
     }
     btnXacNhanCapNhatDoAn.onclick = function (){
@@ -386,8 +345,30 @@ document.addEventListener('DOMContentLoaded', async function (){
             capNhatDoAnUong(doUong)
         }
     }
-    
-    txtThemGiaDoAn.oninput = function (){
+    function thayDoiDonVi(){
+        if(comboboxThemLoaiDoAnDoUong.value === 'Đồ ăn'){
+            let newOption = `
+                <option value="đĩa">đĩa</option>
+                <option value="bát">bát</option>
+            `;
+            comboboxThemDonViDoAnDoUong.innerHTML = newOption
+        }
+        else  if(comboboxThemLoaiDoAnDoUong.value === 'Đồ uống'){
+            let newOption = `
+                <option value="ly">ly</option>
+                <option value="chai">chai</option>
+                <option value="lon">lon</option>
+            `
+            comboboxThemDonViDoAnDoUong.innerHTML = newOption
+        }
+    }
+    btnThem.onclick = function (){
+        thayDoiDonVi()
+    }
+    comboboxThemLoaiDoAnDoUong.onchange = function (){
+        thayDoiDonVi()
+    }
+    txtThemGiaDoAnDoUong.oninput = function (){
         let start = this.selectionStart;
         let end = this.selectionEnd;
     
@@ -405,15 +386,7 @@ document.addEventListener('DOMContentLoaded', async function (){
         this.value = inputValue || 1
         this.setSelectionRange(start, end);
     }
-    txtThemGiaDoUong.oninput = function (){
-        let start = this.selectionStart;
-        let end = this.selectionEnd;
     
-        // Loại bỏ các ký tự không phải là số
-        let inputValue = this.value.replace(/[^0-9]/g, '');
-        this.value = inputValue || 1
-        this.setSelectionRange(start, end);
-    }
     txtCapNhatGiaDoUong.oninput = function (){
         let start = this.selectionStart;
         let end = this.selectionEnd;

@@ -1,5 +1,5 @@
 @extends('Main')
-@section('title', 'Đơn hàng')
+@section('title', 'Quản lý đơn hàng')
 @section('content')
     <div class="">
         <nav class="row pe-0">

@@ -1,6 +1,7 @@
 <?php
 namespace App\Core;
 
+use App\Controllers\CtrlCapNhatThongTinCaNhan;
 use App\Controllers\CtrlDangNhap;
 use App\Controllers\CtrlDonHang;
 use App\Controllers\CtrlKhachHang;
@@ -70,8 +71,8 @@ class Web
                 return $ctrl->pageNhanVienChiTiet($maNhanVien);
             });
             $r->addRoute('GET', '/thong-tin-ca-nhan', function () {
-                $ctrl = new CtrlDangNhap();
-                return $ctrl->pageThongTinCaNhan();
+                $ctrl = new CtrlCapNhatThongTinCaNhan();
+                return $ctrl->index();
             });
         });
 

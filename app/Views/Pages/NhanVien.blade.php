@@ -23,8 +23,8 @@
         <div class="mt-3">
             <h4 class="d-inline-block mb-0">Danh sách nhân viên</h4>
             <select name="combobox-danhSachTuTrangThai" id="combobox-danhSachTuTrangThai">
-                <option value="0">Đã nghỉ</option>
-                <option value="1" selected>Đang làm</option>
+                <option value="0">Tạm ngưng</option>
+                <option value="1" selected>Hoạt động</option>
             </select>
             <div class="mt-3 overflow-scroll" style="height: 500px">
                 <table class="table table-bordered table-hover" id="table-nhanVien">
@@ -141,8 +141,8 @@
                             <div class="row">
                                 <label class="form-label">Trạng thái</label>
                                 <select id="combobox-CapNhatTrangThai" class="form-control">
-                                    <option value="0">Đã nghỉ</option>
-                                    <option value="1" selected>Đang làm</option>
+                                    <option value="0">Tạm ngưng</option>
+                                    <option value="1" selected>Hoạt động</option>
                                 </select>
                             </div>
                             <div class="row">

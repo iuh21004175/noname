@@ -15,8 +15,8 @@
                 </form>
             </div>
             <div class="col-2">
-                <button class="btn btn-outline-success w-auto" data-bs-toggle="modal" data-bs-target="#form-themDoAn">Thêm đồ ăn</button>
-                <button class="btn btn-outline-success w-auto" data-bs-toggle="modal" data-bs-target="#form-themDoUong">Thêm đồ uống</button>
+                <button class="btn btn-outline-success w-auto" data-bs-toggle="modal" data-bs-target="#form-themDoAnDoUong" id="btnThem">Thêm món</button>
+            
             </div>
         </nav>
         <div class="mt-3">
@@ -49,30 +49,37 @@
         </div>
     </div>
 
-    <div class="modal fade" id="form-themDoAn" tabindex="-1"  aria-hidden="true" >
+    <div class="modal fade" id="form-themDoAnDoUong" tabindex="-1"  aria-hidden="true" >
         <div class="modal-dialog">
             <div class="modal-content">
                 <form>
                     <div class="modal-header">
-                        <h5 class="modal-title">Thêm đồ ăn</h5>
+                        <h5 class="modal-title">Thêm đồ ăn đồ uống</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
 
                         <div class="container-fluid">
                             <div class="row">
-                                <label class="form-label">Tên đồ ăn: <span class="text-danger" id="message-errorThemTenDoAn"></span> </label>
-                                <input type="text" class="form-control" id="txt-ThemTenDoAn" name="txt-ThemTenDoAn">
+                                <label class="form-label">Tên: <span class="text-danger" id="message-errorThemTenDoAnDoUong"></span> </label>
+                                <input type="text" class="form-control" id="txt-ThemTenDoAnDoUong" name="txt-ThemTenDoAnDoUong">
                             </div>
                             <div class="row">
-                                <label class="form-label">Giá: <span class="text-danger" id="message-errorThemGiaDoAn"></span></label>
-                                <input type="text" class="form-control" id="txt-ThemGiaDoAn" name="txt-ThemGiaDoAn">
+                                <label class="form-label">Giá: <span class="text-danger" id="message-errorThemGiaDoAnDoUong"></span></label>
+                                <input type="text" class="form-control" id="txt-ThemGiaDoAnDoUong" name="txt-ThemGiaDoAnDoUong">
                             </div>
                             <div class="row">
                                 <label class="form-label">Đơn vi: </label>
-                                <select id="combobox-ThemDonViDoAn" class="form-control ">
-                                    <option value="đĩa">đĩa</option>
-                                    <option value="bát">bát</option>
+                                <select id="combobox-ThemLoaiDoAnDoUong" class="form-control ">
+                                    <option value="Đồ ăn">Đồ ăn</option>
+                                    <option value="Đồ uống">Đồ uống</option>
+
+                                </select>
+                            </div>
+                            <div class="row">
+                                <label class="form-label">Đơn vi: </label>
+                                <select id="combobox-ThemDonViDoAnDoUong" class="form-control ">
+                                    
 
                                 </select>
                             </div>
@@ -81,7 +88,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <button type="button" class="btn btn-success" id="btn-themDoAn">Thêm</button>
+                        <button type="button" class="btn btn-success" id="btn-themDoAnDoUong">Thêm</button>
                     </div>
                 </form>
             </div>
@@ -146,7 +153,7 @@
             <div class="modal-content">
                 <form>
                     <div class="modal-header">
-                        <h5 class="modal-title">Cập nhật đồ ăn</h5>
+                        <h5 class="modal-title">Cập nhật món</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -159,6 +166,7 @@
                                 <label class="form-label">Giá: <span class="text-danger" id="message-errorCapNhatGiaDoAn"></span></label>
                                 <input type="text" class="form-control" id="txt-CapNhatGiaDoAn" name="txt-CapNhatGiaDoAn">
                             </div>
+
                             <div class="row">
                                 <label class="form-label">Đơn vi: </label>
                                 <select id="combobox-CapNhatDonViDoAn" class="form-control ">
@@ -193,7 +201,7 @@
             <div class="modal-content">
                 <form>
                     <div class="modal-header">
-                        <h5 class="modal-title">Cập nhật đồ uống</h5>
+                        <h5 class="modal-title">Cập nhật món</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
