@@ -1,17 +1,14 @@
 document.addEventListener('DOMContentLoaded', function (){
     const btnXacNhanCapNhat = document.querySelector('#btn-CapNhat')
     const txtCapNhatNgaySinh = document.querySelector('#txt-CapNhatNgaySinh')
-    const txtCapNhatSoDienThoai = document.querySelector('#txt-CapNhatSoDienThoai')
     const txtCapNhatDiaChi = document.querySelector('#txt-CapNhatDiaChi')
     const txtCapNhatEmail = document.querySelector('#txt-CapNhatEmail')
     const txtCapNhatGhiChu = document.querySelector('#txt-CapNhatGhiChu')
 
     const messageErrorCapNhatNgaySinh = document.querySelector('#message-errorCapNhatNgaySinh')
-    const messageErrorCapNhatSoDienThoai = document.querySelector('#message-errorCapNhatSoDienThoai')
     const messageErrorCapNhatEmail = document.querySelector('#message-errorCapNhatEmail')
 
     let hopLeCapNhatNgaySinh = false
-    let hopLeCapNhatSoDienThoai = false
     let hopLeCapNhatEmail = false
     async function capNhatThongTinCaNhan(obj){
         try {

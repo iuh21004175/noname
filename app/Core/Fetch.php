@@ -10,6 +10,7 @@ use App\Controllers\CtrlKhachHang;
 use App\Controllers\CtrlKhuyenMai;
 use App\Controllers\CtrlNhanVien;
 use App\Controllers\CtrlThucDon;
+use App\Controllers\CtrlTrangChu;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
@@ -136,9 +137,9 @@ class Fetch
                 });
                 $r->addRoute('POST', '/them-do-an-uong', function () {
                     $ctrl = new CtrlThucDon();
-                    $json = file_get_contents('php://input');
-                    $data = json_decode($json, true);
-                    echo json_encode($ctrl->themDoAnUong($data));
+                    $data = json_decode($_POST['data'], true);
+                    $file = isset($_FILES['file']) ? $_FILES['file'] : null;
+                    echo json_encode($ctrl->themDoAnUong($data, $file));
                 });
                 $r->addRoute('POST', '/xoa-do-an-uong', function () {
                     $ctrl = new CtrlThucDon();
@@ -148,11 +149,27 @@ class Fetch
                 });
                 $r->addRoute('POST', '/cap-nhat-do-an-uong', function () {
                     $ctrl = new CtrlThucDon();
-                    $json = file_get_contents('php://input');
-                    $data = json_decode($json, true);
-                    echo json_encode($ctrl->capNhatDoAnUong($data));
+                    $data = json_decode($_POST['data'], true);
+                    $file = isset($_FILES['file']) ? $_FILES['file'] : null;
+                    echo json_encode($ctrl->capNhatDoAnUong($data, $file));
+                });
+                $r->addRoute('GET', '/top-5-do-an-ua-chuong-nhat-nam-{nam}', function ($nam){
+                    $ctrl = new CtrlTrangChu();
+                    echo json_encode($ctrl->layNamDoAnTopTheoNam($nam));
+                });
+                $r->addRoute('GET', '/top-5-do-uong-ua-chuong-nhat-nam-{nam}', function ($nam){
+                    $ctrl = new CtrlTrangChu();
+                    echo json_encode($ctrl->layNamDoUongTopTheoNam($nam));
                 });
             }
+            $r->addRoute('GET', '/danh-sach-don-hang-BI', function () {
+                $ctrl = new CtrlDonHang();
+                echo json_encode($ctrl->layDanhSachDonHangBI());
+            });
+            $r->addRoute('GET', '/danh-sach-khach-hang-BI', function () {
+                $ctrl = new CtrlKhachHang();
+                echo json_encode($ctrl->layDanhSachKhachHangBI());
+            });
         });
         $httpMethod = $_SERVER['REQUEST_METHOD'];
         $uri = $_SERVER['REQUEST_URI'];

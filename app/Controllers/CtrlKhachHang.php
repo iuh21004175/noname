@@ -9,14 +9,13 @@ use App\Models\NhanVien;
 
 class CtrlKhachHang extends Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->capsule->getConnection()->statement('CALL CapNhatTrangThaiKhachHang()');
+    }
     public function index(){
-        if(isset($_SESSION['user_id'])){
-            return $this->view('Pages.KhachHang');
-        }
-        else{
-            header('Location: ./dang-nhap');
-        }
-
+        return $this->view('Pages.KhachHang');
     }
     public function pageKhachHangChiTiet($maKhachHang)
     {
@@ -24,6 +23,10 @@ class CtrlKhachHang extends Controller
         $khachHang = KhachHang::where('MaKhachHang', $maKhachHang)->first();
         $nhanVien = NhanVien::where('MaNhanVien', $khachHang['MaNhanVien'])->first();
         return $this->view('Pages.KhachHangChiTiet', ['donHangS'=>$donHangS, 'khachHang'=>$khachHang, 'nhanVien'=>$nhanVien]);
+    }
+    public function layDanhSachKhachHangBI()
+    {
+        return KhachHang::all();
     }
     public function layDanhSachKhachHangTheoTrangThai($trangThai){
         return KhachHang::where('TrangThai', $trangThai)->orderBy('MaKhachHang', 'desc')->get();
@@ -81,8 +84,7 @@ class CtrlKhachHang extends Controller
             'TenKhachHang' => $khachHang['TenKhachHang'],
             'SoDienThoai' => $khachHang['SoDienThoai'],
             'GioiTinh' => $khachHang['GioiTinh'],
-            'DiaChi' => $khachHang['DiaChi'],
-            'TrangThai' => $khachHang['TrangThai']
+            'DiaChi' => $khachHang['DiaChi']
         ]);
         if($result){
             return array('status' => 'success');

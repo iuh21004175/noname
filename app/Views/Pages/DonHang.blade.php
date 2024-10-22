@@ -1,7 +1,12 @@
+@php
+    if(!isset($_SESSION['user_id'])){
+        header('Location: ./dang-nhap');
+    }
+@endphp
 @extends('Main')
 @section('title', 'Quản lý đơn hàng')
 @section('content')
-    <div class="">
+    <div class="mt-3">
         <nav class="row pe-0">
             <div class="col-10">
                 <form id="form-timKiem">
@@ -23,7 +28,7 @@
         <div class="mt-3">
             <h4 class="d-inline-block mb-0">Danh sách đơn hàng</h4>
             từ <input type="date" id="txt-MocNgayBatDau"> đến <input type="date" id="txt-MocNgayKetThuc">
-            <div class="mt-3 overflow-scroll" style="height: 500px">
+            <div class="mt-3 overflow-scroll" style="height: 600px">
                 <table class="table table-striped table-hover table-bordered" id="table-donHang">
                     <thead class="table-light sticky-top">
                     <tr>

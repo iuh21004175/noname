@@ -1,29 +1,47 @@
 <?php $_shouldextend[1]=1; ?>
 <?php $this->startSection('title', 'Khách hàng chi tiết'); ?>
 <?php $this->startSection('content'); ?>
- <div>
- <a href="./khach-hang">Quản lý khách hàng</a>
- <h4 class="text-center">Khách hàng chi tiết</h4>
- <div class="row">
- <p>Mã khách hàng: <?php echo \htmlentities($khachHang['MaKhachHang']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
- <p>Họ và tên: <?php echo \htmlentities($khachHang['TenKhachHang']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
- <p>Giới tính: <?php echo \htmlentities($khachHang['GioiTinh']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
- <p>Số điện thoại: <?php echo \htmlentities($khachHang['SoDienThoai']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
- <p>Tích điểm: <?php echo \htmlentities($khachHang['TichDiem']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
- <p>Địa chỉ: <?php echo \htmlentities($khachHang['DiaChi'] != null ? $khachHang['DiaChi'] : ''??'', ENT_QUOTES, 'UTF-8', false); ?></p>
- <p>Người quản lý: <?php echo \htmlentities($nhanVien['TenNhanVien']??'', ENT_QUOTES, 'UTF-8', false); ?> | Mã nhân viên: <?php echo \htmlentities($nhanVien['MaNhanVien']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
-
+ <div class="container my-5">
+ <div class="card shadow-lg p-4 border-0 rounded-3">
+ <div class="d-flex justify-content-between align-items-center mb-4">
+ <h4 class="m-0">Khách hàng chi tiết</h4>
+ <a href="./khach-hang" class="btn btn-outline-dark">Quản lý khách hàng</a>
  </div>
- <div>
- <h5>Danh sách đơn hàng</h5>
- <table class="table table-bordered">
- <thead class="table-light">
+
+ <div class="row mb-4">
+ <div class="col-md-6 mb-3">
+ <p><strong>Mã khách hàng:</strong> <?php echo \htmlentities($khachHang['MaKhachHang']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ </div>
+ <div class="col-md-6 mb-3">
+ <p><strong>Họ và tên:</strong> <?php echo \htmlentities($khachHang['TenKhachHang']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ </div>
+ <div class="col-md-6 mb-3">
+ <p><strong>Giới tính:</strong> <?php echo \htmlentities($khachHang['GioiTinh']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ </div>
+ <div class="col-md-6 mb-3">
+ <p><strong>Số điện thoại:</strong> <?php echo \htmlentities($khachHang['SoDienThoai']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ </div>
+ <div class="col-md-6 mb-3">
+ <p><strong>Tích điểm:</strong> <?php echo \htmlentities($khachHang['TichDiem']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ </div>
+ <div class="col-md-6 mb-3">
+ <p><strong>Địa chỉ:</strong> <?php echo \htmlentities($khachHang['DiaChi'] != null ? $khachHang['DiaChi'] : 'Chưa cập nhật'??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ </div>
+ <div class="col-md-6 mb-3">
+ <p><strong>Người quản lý:</strong> <?php echo \htmlentities($nhanVien['TenNhanVien']??'', ENT_QUOTES, 'UTF-8', false); ?> | Mã nhân viên: <?php echo \htmlentities($nhanVien['MaNhanVien']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ </div>
+ </div>
+
+ <div class="table-responsive">
+ <h5 class="mb-3">Danh sách đơn hàng</h5>
+ <table class="table table-bordered table-hover table-striped">
+ <thead class="table-dark">
  <tr>
- <td>STT</td>
- <td>Mã đơn hàng</td>
- <td>Ngày lập</td>
- <td>Tổng tiền</td>
- <td>Thao tác</td>
+ <th>STT</th>
+ <th>Mã đơn hàng</th>
+ <th>Ngày lập</th>
+ <th>Tổng tiền</th>
+ <th>Thao tác</th>
  </tr>
  </thead>
  <tbody>
@@ -34,14 +52,15 @@
  <td><?php echo \htmlentities($stt++??'', ENT_QUOTES, 'UTF-8', false); ?></td>
  <td><?php echo \htmlentities($donHang['MaDonHang']??'', ENT_QUOTES, 'UTF-8', false); ?></td>
  <td><?php echo \htmlentities($donHang['NgayLap']??'', ENT_QUOTES, 'UTF-8', false); ?></td>
- <td><?php echo \htmlentities($donHang['TongTien']??'', ENT_QUOTES, 'UTF-8', false); ?></td>
- <td><a href="./don-hang-chi-tiet-<?php echo \htmlentities($donHang['MaDonHang']??'', ENT_QUOTES, 'UTF-8', false); ?>" class="btn btn-light">Xem</a></td>
+ <td><?php echo \htmlentities($donHang['TongTien']??'', ENT_QUOTES, 'UTF-8', false); ?> VND</td>
+ <td><a href="./don-hang-chi-tiet-<?php echo \htmlentities($donHang['MaDonHang']??'', ENT_QUOTES, 'UTF-8', false); ?>" class="btn btn-info btn-sm">Xem</a></td>
  </tr>
  <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
  </tbody>
  </table>
  </div>
  </div>
+ </div>
 <?php $this->stopSection(); ?>
 
-<?php if (isset($_shouldextend[1])) { echo $this->runChild('Content'); } ?>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('MainNoNav'); } ?>

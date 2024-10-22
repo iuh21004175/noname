@@ -15,6 +15,7 @@ class CtrlDangNhap extends Controller
         $md5mk = md5($matkhau);
         $nhanVien = NhanVien::where('SoDienThoai', $tendn)
                                         ->where('MatKhau', $md5mk)
+                                        ->where('TrangThai', 1)
                                         ->first();
         if ($nhanVien != null) {
             if($nhanVien['TrangThaiHoatDong'] == 'Offline'){

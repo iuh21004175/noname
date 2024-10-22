@@ -1,3 +1,14 @@
 .text-danger{
     font-size: 10px;
 }
+#nav{
+
+}
+#navigation .nav-link {
+    color: #4a4a4a; /* Màu xám đen cho chữ */
+    text-decoration: none; /* Loại bỏ gạch chân mặc định */
+}
+#navigation .nav-link.active {
+    color: #000000; /* Chữ màu đen khi active */
+    border-bottom: 2px solid #000000; /* Đường gạch chân màu đen phía dưới */
+}

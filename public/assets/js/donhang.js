@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async function (){
                             <td >${donHang.MaDonHang}</td>
                             <td >${donHang.SoDienThoai}</td>
                             <td >${donHang.NgayLap}</td>
-                            <td >${donHang.TongTien}</td>
+                            <td >${parseInt(donHang.TongTien).toLocaleString('de-DE')} <i class="fa-solid fa-dong-sign"></i></td>
                             <td >
                                 <a class="btn btn-light" href="./don-hang-chi-tiet-${donHang.MaDonHang}">Xem</a>
                                ${xoaButton}

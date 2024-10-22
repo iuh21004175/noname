@@ -1,7 +1,12 @@
+@php
+    if(!isset($_SESSION['user_id'])){
+        header('Location: ./dang-nhap');
+    }
+@endphp
 @extends('Main')
 @section('title', 'Khách hàng')
 @section('content')
-    <div class="">
+    <div class="mt-3">
         <nav class="row pe-0">
             <div class="col-10">
                 <form id="form-timKiem">
@@ -26,7 +31,7 @@
                 <option value="0">Ít hoạt động</option>
                 <option value="1" selected>Hoạt động thường xuyên</option>
             </select>
-            <div class="mt-3 overflow-scroll" style="height: 500px">
+            <div class="mt-3 overflow-scroll" style="height: 600px">
                 <table class="table table-bordered table-hover" id="table-khachHang">
                     <thead class="table-light">
                     <tr>
@@ -145,13 +150,6 @@
                             <div class="row">
                                 <label class="form-label">Địa chỉ: </label>
                                 <textarea type="text" class="form-control" id="txt-diaChiU" name="txt-diaChiU"></textarea>
-                            </div>
-                            <div class="row">
-                                <label class="form-label">Trạng thái</label>
-                                <select class="form-control" name="combobox-CapNhatTrangThai" id="combobox-CapNhatTrangThai">
-                                    <option value="0">Ít hoạt động</option>
-                                    <option value="1">Hoạt động thường xuyên</option>
-                                </select>
                             </div>
                         </div>
                     </div>

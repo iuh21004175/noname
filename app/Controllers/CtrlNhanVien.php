@@ -13,12 +13,7 @@ use App\Models\NhanVien;
 class CtrlNhanVien extends Controller
 {
     public function index(){
-        if(isset($_SESSION['user_id'])){
-            return $this->view('Pages.NhanVien');
-        }
-        else{
-            header('Location: ./nhan-vien');
-        }
+        return $this->view('Pages.NhanVien');
     }
     public function pageNhanVienChiTiet($maNhanVien)
     {

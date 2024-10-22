@@ -318,8 +318,7 @@ document.addEventListener('DOMContentLoaded', async function (){
                 'TenKhachHang': txtHoVaTenU.value,
                 'SoDienThoai': txtSoDienThoaiU.value,
                 'GioiTinh':radioGioiTinhU.value,
-                'DiaChi': txtDiaChi.value !== '' ? txtDiaChi.value : null,
-                'TrangThai': comboboxCapNhatTrangThai.value
+                'DiaChi': txtDiaChi.value !== '' ? txtDiaChi.value : null
             }
             capNhatKhachHang(khachHang)
         }

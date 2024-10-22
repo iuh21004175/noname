@@ -37,6 +37,13 @@ document.addEventListener('DOMContentLoaded', async function (){
     const comboboxCapNhatTrangThaiDoUong = document.querySelector('#combobox-CapNhatTrangThaiDoUong')
     const comboboxDanhSachTuTrangThai = document.querySelector('#combobox-danhSachTuTrangThai')
 
+    const fileThemDoAnUong = document.querySelector('#file-ThemAnhDoAnDoUong')
+    const fileCapNhatDoAn = document.querySelector('#file-CapNhatAnhDoAn')
+    const fileCapNhatDoUong = document.querySelector('#file-CapNhatAnhDoUong')
+
+    const imgCapNhatDoAn = document.querySelector('#img-CapNhatDoAnPreview')
+    const imgCapNhatDoUong = document.querySelector('#img-CapNhatDoUongPreview')
+
     let hopLeThemTenDoAnDoUong = false
     let hopLeThemGiaDoAnDoUong = false
 
@@ -65,9 +72,10 @@ document.addEventListener('DOMContentLoaded', async function (){
                 }
                 newRow.innerHTML = `
                     <td>${index + 1}</td>
+                    <td><img src="${doAnUong.HinhAnh === '' ? './public/assets/image/mon_default.png':'./public/assets/image/'+doAnUong.HinhAnh}" alt="${doAnUong.Ten}" height="100"></td>
                     <td>${doAnUong.MaDoAnUong}</td>
                     <td>${doAnUong.Ten}</td>
-                    <td>${doAnUong.Gia}</td>
+                    <td>${parseInt(doAnUong.Gia).toLocaleString('de-DE')} <i class="fa-solid fa-dong-sign"></i></td>
                     <td>${doAnUong.Loai}</td>
                     <td>${doAnUong.DonVi}</td>
                     <td>
@@ -136,7 +144,7 @@ document.addEventListener('DOMContentLoaded', async function (){
                 comboboxCapNhatDonViDoAn.value = doAnUong.DonVi
                 comboboxCapNhatTrangThaiDoAn.value = doAnUong.TrangThai
                 btnXacNhanCapNhatDoAn.value = doAnUong.MaDoAnUong
-
+                imgCapNhatDoAn.src = doAnUong.HinhAnh === '' ? './public/assets/image/mon_default.png':`./public/assets/image/${doAnUong.HinhAnh}`
             }
         })
         const btnCapNhatDoUong = document.querySelectorAll('.btn-capNhatDoUong')
@@ -155,7 +163,7 @@ document.addEventListener('DOMContentLoaded', async function (){
                 comboboxCapNhatDonViDoUong.value = doAnUong.DonVi
                 comboboxCapNhatTrangThaiDoUong.value = doAnUong.TrangThai
                 btnXacNhanCapNhatDoUong.value = doAnUong.MaDoAnUong
-        
+                imgCapNhatDoUong.src = doAnUong.HinhAnh === '' ? './public/assets/image/mon_default.png':`./public/assets/image/${doAnUong.HinhAnh}`
             }
         })
     }
@@ -181,11 +189,10 @@ document.addEventListener('DOMContentLoaded', async function (){
             }
             else{
                 hopLeThemGiaDoAnDoUong = false
-                messageErrorThemGiaDoAnDoUong.innerHTML = 'Giá đồ ăn phải tròn nghìn'
+                messageErrorThemGiaDoAnDoUong.innerHTML = 'Giá bán phải tròn nghìn'
             }
         }
     }
-    
     function kiemTraCapNhatTenDoAn(){
         if(txtCapNhatTenDoAn.value === ''){
             hopLeCapNhatTenDoAn = false
@@ -253,15 +260,11 @@ document.addEventListener('DOMContentLoaded', async function (){
             renderDoAnUong(ds)
         }
     }
-    async function themDoAnUong(obj){
-
+    async function themDoAnUong(formData){
         try {
             const response = await fetch('./fetch/them-do-an-uong',{
                 method: 'POST',
-                headers:{
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(obj)
+                body: formData
             })
             if (!response.ok) {
                 throw new Error('Network response was not ok ' + response.statusText);
@@ -270,24 +273,25 @@ document.addEventListener('DOMContentLoaded', async function (){
             if(data.status === 'success'){
                 window.location.href = './thuc-don'
             }
+            else{
+                alert(data.message)
+            }
         }
         catch (error){
             console.error('Fetch error: ', error)
         }
     }
-    async function capNhatDoAnUong(obj){
+    async function capNhatDoAnUong(formData){
         try {
             const response = await fetch('./fetch/cap-nhat-do-an-uong',{
                 method: 'POST',
-                headers:{
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(obj)
+                body: formData
             })
             if (!response.ok) {
                 throw new Error('Network response was not ok ' + response.statusText);
             }
             const data = await response.json()
+            console.log(data)
             if(data.status === 'success'){
                 if(data.message !== undefined){
                     alert(data.message)
@@ -302,23 +306,86 @@ document.addEventListener('DOMContentLoaded', async function (){
             console.error('Fetch error: ', error)
         }
     }
+    function hienThiAnhThem() {
+        const imgPreview = document.getElementById('img-ThemPreview');
+
+        // Kiểm tra xem người dùng đã chọn file hay chưa
+        if (fileThemDoAnUong.files && fileThemDoAnUong.files[0]) {
+            const reader = new FileReader();
+
+            // Khi file được đọc thành công
+            reader.onload = function(e) {
+                // Cập nhật src của img để hiển thị ảnh
+                imgPreview.src = e.target.result;
+            }
+
+            // Đọc file dưới dạng DataURL (base64)
+            reader.readAsDataURL(fileThemDoAnUong.files[0]);
+        }
+    }
+    function hienThiAnhDoAnCapNhat() {
+
+        // Kiểm tra xem người dùng đã chọn file hay chưa
+        if (fileCapNhatDoAn.files && fileCapNhatDoAn.files[0]) {
+            const reader = new FileReader();
+
+            // Khi file được đọc thành công
+            reader.onload = function(e) {
+                // Cập nhật src của img để hiển thị ảnh
+                imgCapNhatDoAn.src = e.target.result;
+            }
+
+            // Đọc file dưới dạng DataURL (base64)
+            reader.readAsDataURL(fileCapNhatDoAn.files[0]);
+        }
+    }
+    function hienThiAnhDoUongCapNhat() {
+
+        // Kiểm tra xem người dùng đã chọn file hay chưa
+        if (fileCapNhatDoUong.files && fileCapNhatDoUong.files[0]) {
+            const reader = new FileReader();
+
+            // Khi file được đọc thành công
+            reader.onload = function(e) {
+                // Cập nhật src của img để hiển thị ảnh
+                imgCapNhatDoUong.src = e.target.result;
+            }
+
+            // Đọc file dưới dạng DataURL (base64)
+            reader.readAsDataURL(fileCapNhatDoUong.files[0]);
+        }
+    }
+    fileThemDoAnUong.onchange = function(){
+        hienThiAnhThem()
+    }
+    fileCapNhatDoAn.onchange = function(){
+        hienThiAnhDoAnCapNhat()
+    }
+    fileCapNhatDoUong.onchange = function (){
+        hienThiAnhDoUongCapNhat()
+    }
     btnThemDoAnDoUong.onclick = function (){
         kiemTraThemTenDoAnDoUong()
         kiemTraThemGiaDoAnDoUong()
         if(hopLeThemTenDoAnDoUong && hopLeThemGiaDoAnDoUong){
+            const formData = new FormData()
             let newDoAnDoUong = {
                 'Ten': txtThemTenDoAnDoUong.value,
                 'Gia': txtThemGiaDoAnDoUong.value,
                 'DonVi': comboboxThemDonViDoAnDoUong.value,
                 'Loai': comboboxThemLoaiDoAnDoUong.value
             }
-            themDoAnUong(newDoAnDoUong)
+            let file = fileThemDoAnUong.files[0]
+            formData.append('file', file)
+            formData.append('data', JSON.stringify(newDoAnDoUong))
+            themDoAnUong(formData)
         }
     }
     btnXacNhanCapNhatDoAn.onclick = function (){
         kiemTraCapNhatTenDoAn()
         kiemTraCapNhatGiaDoAn()
         if(hopLeCapNhatTenDoAn && hopLeCapNhatGiaDoAn){
+            let formData = new FormData()
             let doAn = {
                 'MaDoAnUong': this.value,
                 'Ten': txtCapNhatTenDoAn.value,
@@ -327,13 +394,16 @@ document.addEventListener('DOMContentLoaded', async function (){
                 'MoTa': txtCapNhatMoTaDoAn.value,
                 'TrangThai': comboboxCapNhatTrangThaiDoAn.value
             }
-            capNhatDoAnUong(doAn)
+            formData.append('file', fileCapNhatDoAn.files[0])
+            formData.append('data', JSON.stringify(doAn))
+            capNhatDoAnUong(formData)
         }
     }
     btnXacNhanCapNhatDoUong.onclick = function (){
         kiemTraCapNhatTenDoUong()
         kiemTraCapNhatGiaDoUong()
         if(hopLeCapNhatTenDoUong && hopLeCapNhatGiaDoUong){
+            let formData = new FormData()
             let doUong = {
                 'MaDoAnUong': this.value,
                 'Ten': txtCapNhatTenDoUong.value,
@@ -342,7 +412,9 @@ document.addEventListener('DOMContentLoaded', async function (){
                 'MoTa': txtCapNhatMoTaDoUong.value,
                 'TrangThai': comboboxCapNhatTrangThaiDoUong.value
             }
-            capNhatDoAnUong(doUong)
+            formData.append('file', fileCapNhatDoUong.files[0])
+            formData.append('data', JSON.stringify(doUong))
+            capNhatDoAnUong(formData)
         }
     }
     function thayDoiDonVi(){
@@ -374,7 +446,7 @@ document.addEventListener('DOMContentLoaded', async function (){
     
         // Loại bỏ các ký tự không phải là số
         let inputValue = this.value.replace(/[^0-9]/g, '');
-        this.value = inputValue || 1
+        this.value = inputValue || ''
         this.setSelectionRange(start, end);
     }
     txtCapNhatGiaDoAn.oninput = function (){
@@ -383,7 +455,7 @@ document.addEventListener('DOMContentLoaded', async function (){
     
         // Loại bỏ các ký tự không phải là số
         let inputValue = this.value.replace(/[^0-9]/g, '');
-        this.value = inputValue || 1
+        this.value = inputValue || ''
         this.setSelectionRange(start, end);
     }
     
@@ -393,7 +465,7 @@ document.addEventListener('DOMContentLoaded', async function (){
     
         // Loại bỏ các ký tự không phải là số
         let inputValue = this.value.replace(/[^0-9]/g, '');
-        this.value = inputValue || 1
+        this.value = inputValue || ''
         this.setSelectionRange(start, end);
     }
     txtTimKiem.oninput = function (){

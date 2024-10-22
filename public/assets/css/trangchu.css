@@ -1,0 +1,14 @@
+/* Đặt ảnh nền cho wrapper */
+.wrapper {
+    background-image: url('../image/wapper.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    color: white; /* Đặt màu chữ để tương phản với ảnh nền */
+}
+.overlay {
+    background-color: rgba(0, 0, 0, 0.5); /* Tạo hiệu ứng mờ trên nền ảnh */
+    padding: 2rem;
+    border-radius: 10px;
+}

@@ -1,4 +1,4 @@
-@extends('Content')
+@extends('MainNoNav')
 @section('title', 'Thông tin cá nhân')
 @section('content')
     <div>
@@ -36,7 +36,7 @@
                             </div>
                             <div class="row">
                                 <label class="form-label">Số điện thoại: <span class="text-danger" id="message-errorCapNhatSoDienThoai"></span> </label>
-                                <input type="text" class="form-control" id="txt-CapNhatSoDienThoai" name="txt-CapNhatSoDienThoai" maxlength="10" value="{{$nhanVien['SoDienThoai']}}" {{$_SESSION['role'] != "Quản lý" ? 'disable' : ''}}>
+                                <input type="text" class="form-control" id="txt-CapNhatSoDienThoai" name="txt-CapNhatSoDienThoai" maxlength="10" value="{{$nhanVien['SoDienThoai']}}" disabled>
                             </div>
                             <div class="row">
                                 <label class="form-label">Email: <span class="text-danger" id="message-errorCapNhatEmail"></span> </label>

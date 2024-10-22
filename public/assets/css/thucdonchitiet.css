@@ -1,0 +1,51 @@
+/* Thiết lập chung cho card */
+.card {
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Tiêu đề Thực đơn chi tiết */
+h4 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Định dạng nội dung thông tin */
+p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+p strong {
+    color: #000;
+}
+
+/* Khoảng cách các phần tử */
+.mb-3 {
+    margin-bottom: 1.5rem;
+}
+
+.mb-4 {
+    margin-bottom: 2rem;
+}
+
+/* Định dạng cho hình ảnh */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+/* Định dạng cho khung hình ảnh */
+.shadow {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Màu sắc cho các thông tin lỗi */
+.text-danger {
+    color: #dc3545;
+}

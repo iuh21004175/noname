@@ -5,7 +5,7 @@
  <a href="./don-hang">Quản lý đơn hàng</a>
  <div class="row">
 
- <div class="col-8" id="form-donHang">
+ <div class="col-7" id="form-donHang">
  <form>
  <h4 class="text-center">Đơn hàng</h4>
  <div class="row mb-2">
@@ -18,7 +18,7 @@
  </div>
  </div>
  <div>
- <h5>Danh sách đồ ăn và đồ uống</h5>
+ <h5>Danh sách món đã đặt</h5>
  <div class="overflow-scroll mb-2" style="min-height: 400px">
  <table class="table table-bordered" id="danhSachMAnDH">
  <thead class="table-light">
@@ -42,23 +42,27 @@
  <b>Khuyến mãi (nếu có):  </b><input type="text" class="border-0" disabled id="txt-khuyenMai" name="txt-khuyenMai" style="width: 400px">
  </div>
  <div class="mb-2" id="tichDiem">
- <b>Sử dụng tích điểm (tối đa 100): </b><input type="text" class="" id="txt-tichDiem" value="0">
+ <b>Sử dụng tích điểm (tối thiểu 30): </b><input type="text" class="" id="txt-tichDiem" value="0">
  </div>
  </div>
  <div>
- <h5 >Tổng tiền: <input type="number" class="tongTienDH border-0" value="0" disabled></h5>
- <h5 class="d-inline-block">Tính tiền thối: <input type="text" id="txt-soTienKhachHang" placeholder="Nhập số tiền"> Tiền thối <input type="text" id="txt-tienThoi" disabled></h5>
+ <h5 >Tổng tiền: <input type="number" class="tongTienDH border-0" value="0" disabled> <i class="fa-solid fa-dong-sign"></i></h5>
+ <h5 class="d-inline-block">Tính tiền thối: <input type="text" id="txt-soTienKhachHang" placeholder="Nhập số tiền"> Tiền thối <input type="text" id="txt-tienThoi" disabled> <i class="fa-solid fa-dong-sign"></i></h5>
  </div>
  <input type="button" disabled id="btn-taoDH" value="Tạo đơn hàng">
  </form>
 
  </div>
- <div class="col-4">
+ <div class="col-5">
  <h5>Thực đơn</h5>
- <div class="overflow-scroll" style="height: 600px">
+ <form action="">
+ <input type="search" name="txtTimMon" id="txt-TimMon" class="form-control my-2" placeholder="Nhập tên món">
+ </form>
+ <div class="overflow-scroll" style="height: 700px">
  <table class="table table-hover table-bordered" id="danhSachMA">
  <thead class="table-light sticky-top">
  <tr>
+ <td>Hình</td>
  <td>Tên món</td>
  <td>Giá</td>
  <td>Thêm</td>
@@ -76,8 +80,8 @@
  </div>
 <?php $this->stopSection(); ?>
 <?php $this->startSection('script'); ?>
- <script src="./public/assets/js/dathang.js"></script>
+ <script src="./public/assets/js/donhangtao.js"></script>
 <?php $this->stopSection(); ?>
 
 
-<?php if (isset($_shouldextend[1])) { echo $this->runChild('Content'); } ?>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('MainNoNav'); } ?>

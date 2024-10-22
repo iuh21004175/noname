@@ -1,7 +1,15 @@
+@php
+    if(!isset($_SESSION['user_id'])){
+        header('Location: ./dang-nhap');
+    }
+    if($_SESSION['role'] != 'LNV0000001'){
+        header('Location: ./');
+    }
+@endphp
 @extends('Main')
 @section('title', 'Nhân viên')
 @section('content')
-    <div class="">
+    <div class="mt-3">
         <nav class="row pe-0">
             <div class="col-10">
                 <form id="form-timKiem">
@@ -26,7 +34,7 @@
                 <option value="0">Tạm ngưng</option>
                 <option value="1" selected>Hoạt động</option>
             </select>
-            <div class="mt-3 overflow-scroll" style="height: 500px">
+            <div class="mt-3 overflow-scroll" style="height: 600px">
                 <table class="table table-bordered table-hover" id="table-nhanVien">
                     <thead class="table-light">
                     <tr>

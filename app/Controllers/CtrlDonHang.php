@@ -20,13 +20,7 @@ class CtrlDonHang extends Controller
     }
 
     public function index(){
-        if(isset($_SESSION['user_id'])){
-            return $this->view("Pages.DonHang");
-        }
-        else{
-            header('Location: ./dang-nhap');
-        }
-
+        return $this->view("Pages.DonHang");
     }
     public function pageDatHang()
     {
@@ -53,6 +47,18 @@ class CtrlDonHang extends Controller
                             ->where('NgayLap', '<=', $end)
                             ->orderBy('NgayLap', 'desc')
                             ->get();
+        foreach ($donHang as $dh) {
+            $khachHang = KhachHang::where('MaKhachHang', $dh['MaKhachHang'])->first();
+            $dh['SoDienThoai'] = $khachHang != null ? $khachHang['SoDienThoai'] : '';
+        }
+        return $donHang;
+    }
+    public function layDanhSachDonHangBI(){
+        $donHang = DonHang::all();
+        return $donHang;
+    }
+    public function layDanhSachDonHangTheoTrangThai($trangThai){
+        $donHang = DonHang::where('TrangThai', $trangThai)->orderBy('NgayLap', 'desc')->get();
         foreach ($donHang as $dh) {
             $khachHang = KhachHang::where('MaKhachHang', $dh['MaKhachHang'])->first();
             $dh['SoDienThoai'] = $khachHang != null ? $khachHang['SoDienThoai'] : '';

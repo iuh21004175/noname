@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Đăng Nhập</title>
- <link rel="stylesheet" href="./public/assets/css/bootstrap.min.css">
-</head>
-<body>
-<div class="container">
- <div class="row justify-content-center">
- <div class="col-md-4">
- <h2 class="text-center my-4">Đăng Nhập</h2>
+<?php $_shouldextend[1]=1; ?>
+<?php $this->startSection('title', 'Đăng nhập'); ?>
+<?php $this->startSection('link'); ?>
+ <link rel="stylesheet" href="./public/assets/css/dangnhap.css">
+<?php $this->stopSection(); ?>
+<?php $this->startSection('content'); ?>
+ <div class="container">
+ <h2 class="text-center">Đăng Nhập</h2>
  <form id="form-dn">
  <div class="mb-3">
  <label for="username" class="form-label">Tên Đăng Nhập <span class="user-error text-danger"></span></label>
@@ -25,10 +20,10 @@
  </div>
  </form>
  </div>
- </div>
-</div>
+<?php $this->stopSection(); ?>
 <script src="./public/assets/js/popper.min.js"></script>
 <script src="./public/assets/js/bootstrap.min.js"></script>
-<script src="./public/assets/js/dangnhap.js"></script>
-</body>
-</html>
+<?php $this->startSection('script'); ?>
+ <script src="./public/assets/js/dangnhap.js"></script>
+<?php $this->stopSection(); ?>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('MainNoNav'); } ?>

@@ -16,7 +16,8 @@ class DoAnUong extends Model
         'DonVi',
         'MoTa',
         'Loai',
-        'TrangThai'
+        'TrangThai',
+        'HinhAnh'
     ];
     public $timestamps = false;
 }

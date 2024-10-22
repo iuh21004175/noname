@@ -19,6 +19,5 @@ class CtrlDangXuat extends Controller
         else{
             return array('status' => 'fail', 'message' => 'Đăng xuất không thành công: '.$result);
         }
-
     }
 }

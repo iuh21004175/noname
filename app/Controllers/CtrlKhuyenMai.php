@@ -17,13 +17,7 @@ class CtrlKhuyenMai extends Controller
         $this->capsule->getConnection()->statement('CALL CapNhatTrangThaiKhuyenMaiHetHan()');
     }
     public function index(){
-        if(isset($_SESSION['user_id'])){
-            return $this->view('Pages.KhuyenMai');
-        }
-        else{
-            header('Location: ./dang-nhap');
-        }
-
+        return $this->view('Pages.KhuyenMai');
     }
     public function layDanhSachKhuyenMaiTheoTrangThai($trangThai){
         return KhuyenMai::where('TrangThai', $trangThai)->orderBy('MaKhuyenMai', 'desc')->get();
