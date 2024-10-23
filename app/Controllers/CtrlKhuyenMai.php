@@ -15,6 +15,7 @@ class CtrlKhuyenMai extends Controller
     {
         parent::__construct();
         $this->capsule->getConnection()->statement('CALL CapNhatTrangThaiKhuyenMaiHetHan()');
+        $this->capsule->getConnection()->statement('CALL  CapNhatHoatDongCuoi("'.$_SESSION['user_id'].'")');
     }
     public function index(){
         return $this->view('Pages.KhuyenMai');

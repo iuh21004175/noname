@@ -1,3 +1,8 @@
+<?php 
+ if(!isset($_SESSION['user_id'])){
+ header('Location: ./dang-nhap');
+ }
+ ?>
 <?php $_shouldextend[1]=1; ?>
 <?php $this->startSection('title', 'Đơn hàng chi tiết'); ?>
 <?php $this->startSection('content'); ?>
@@ -28,7 +33,7 @@
  <p><strong>Tích điểm sử dụng:</strong> <?php echo \htmlentities($donHang['TichDiemSuDung']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
  </div>
  <div class="col-md-6 mb-3">
- <p><strong>Tổng tiền:</strong> <?php echo \htmlentities($donHang['TongTien']??'', ENT_QUOTES, 'UTF-8', false); ?> VND</p>
+ <p><strong>Tổng tiền:</strong> <?php echo \htmlentities(number_format($donHang['TongTien'], 0, ',', '.')??'', ENT_QUOTES, 'UTF-8', false); ?> <i class="fa-solid fa-dong-sign"></i></p>
  </div>
  <div class="col-md-6 mb-3">
  <p><strong>Người quản lý:</strong> <?php echo \htmlentities($nhanVien['TenNhanVien']??'', ENT_QUOTES, 'UTF-8', false); ?> | Mã nhân viên: <?php echo \htmlentities($nhanVien['MaNhanVien']??'', ENT_QUOTES, 'UTF-8', false); ?></p>

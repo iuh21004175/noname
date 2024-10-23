@@ -1,20 +1,46 @@
+@php
+    if(!isset($_SESSION['user_id'])){
+        header('Location: ./dang-nhap');
+    }
+@endphp
 @extends('MainNoNav')
 @section('title', 'Thông tin cá nhân')
 @section('content')
-    <div>
-        <a href="./">Trang chủ</a>
-        <h4 class="text-center">Thông tin cá nhân</h4>
-        <div class="row">
-            <p>Mã nhân viên: {{$nhanVien['MaNhanVien']}}</p>
-            <p>Họ và tên: {{$nhanVien['TenNhanVien']}}</p>
-            <p>Ngày sinh: {{$nhanVien['NgaySinh']}}</p>
-            <p>Địa chỉ: {{$nhanVien['DiaChi'] != null ? $nhanVien['DiaChi']:''}}</p>
-            <p>Số điện thoại: {{$nhanVien['SoDienThoai']}}</p>
-            <p>Email: {{$nhanVien['Email'] != null ? $nhanVien['Email']:''}}</p>
-            <p>Ghi chú: {{$nhanVien['GhiChu'] != null ? $nhanVien['GhiChu']:''}}</p>
+    <div class="container my-5">
+        <div class="card shadow-lg p-4 border-0 rounded-3">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="m-0">Thông tin cá nhân</h4>
+                <a href="./" class="btn btn-outline-dark">Trang chủ</a>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-6 mb-3">
+                    <p><strong>Mã nhân viên:</strong> {{$nhanVien['MaNhanVien']}}</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <p><strong>Họ và tên:</strong> {{$nhanVien['TenNhanVien']}}</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <p><strong>Ngày sinh:</strong> {{$nhanVien['NgaySinh']}}</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <p><strong>Địa chỉ:</strong> {{$nhanVien['DiaChi'] != null ? $nhanVien['DiaChi'] : 'Chưa có thông tin'}}</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <p><strong>Số điện thoại:</strong> {{$nhanVien['SoDienThoai']}}</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <p><strong>Email:</strong> {{$nhanVien['Email'] != null ? $nhanVien['Email'] : 'Chưa có thông tin'}}</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <p><strong>Ghi chú:</strong> {{$nhanVien['GhiChu'] != null ? $nhanVien['GhiChu'] : 'Chưa có thông tin'}}</p>
+                </div>
+            </div>
+
+            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#form-capNhat">Cập nhật</button>
         </div>
-        <button class="btn btn-outline-primary btn-capNhat" data-bs-toggle="modal" data-bs-target="#form-capNhat">Cập nhật</button>
     </div>
+
     <div class="modal fade" id="form-capNhat" tabindex="-1"  aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

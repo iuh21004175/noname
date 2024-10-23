@@ -12,7 +12,14 @@ use App\Models\NhanVien;
 
 class CtrlNhanVien extends Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->capsule->getConnection()->statement('CALL  CapNhatHoatDongCuoi("'.$_SESSION['user_id'].'")');
+    }
+
     public function index(){
+        $this->capsule->getConnection()->statement('CALL CapNhatTatCaTrangThaiHoatDong()');
         return $this->view('Pages.NhanVien');
     }
     public function pageNhanVienChiTiet($maNhanVien)
@@ -24,7 +31,7 @@ class CtrlNhanVien extends Controller
     }
     public function layDanhSachNhanVienTheoTrangThai($trangThai)
     {
-        $nhanVienS = NhanVien::where('TrangThai', $trangThai)->orderBy('MaNhanVien', 'desc')->get();
+        $nhanVienS = NhanVien::where('TrangThai', $trangThai)->orderByRaw("FIELD(TrangThaiHoatDong, 'Online', 'Offline')")->get();
         foreach ($nhanVienS as $nhanVien) {
             $loaiNhanVien = LoaiNhanVien::where('MaLoaiNhanVien', $nhanVien['MaLoaiNhanVien'])->first();
             $nhanVien['TenLoaiNhanVien'] = $loaiNhanVien['TenLoaiNhanVien'];

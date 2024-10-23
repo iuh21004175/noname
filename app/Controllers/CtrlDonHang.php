@@ -17,6 +17,7 @@ class CtrlDonHang extends Controller
     {
         parent::__construct();
         $this->capsule->getConnection()->statement('CALL  CapNhatTrangThaiDonHangKhoa()');
+        $this->capsule->getConnection()->statement('CALL  CapNhatHoatDongCuoi("'.$_SESSION['user_id'].'")');
     }
 
     public function index(){

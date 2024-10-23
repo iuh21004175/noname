@@ -7,7 +7,7 @@
     }
 @endphp
 @extends('Main')
-@section('title', 'Nhân viên')
+@section('title', 'Quản lý nhân viên')
 @section('content')
     <div class="mt-3">
         <nav class="row pe-0">

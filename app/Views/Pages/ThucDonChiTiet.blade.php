@@ -2,6 +2,7 @@
     if(!isset($_SESSION['user_id'])){
         header('Location: ./dang-nhap');
     }
+
 @endphp
 @extends('MainNoNav')
 @section('title', 'Thực đơn chi tiết')
@@ -27,7 +28,7 @@
                                 <p><strong>Tên:</strong> {{$doAnUong['Ten']}}</p>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <p><strong>Giá:</strong> {{$doAnUong['Gia']}} VND</p>
+                                <p><strong>Giá:</strong> {{number_format($doAnUong['Gia'], 0, ',', '.')}} <i class="fa-solid fa-dong-sign"></i></p>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <p><strong>Loại:</strong> {{$doAnUong['Loai']}}</p>

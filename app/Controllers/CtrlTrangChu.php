@@ -6,6 +6,11 @@ use App\Core\Controller;
 
 class CtrlTrangChu extends Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->capsule->getConnection()->statement('CALL  CapNhatHoatDongCuoi("'.$_SESSION['user_id'].'")');
+    }
 
     public function index()
     {

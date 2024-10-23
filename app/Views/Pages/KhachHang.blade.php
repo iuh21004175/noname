@@ -2,9 +2,12 @@
     if(!isset($_SESSION['user_id'])){
         header('Location: ./dang-nhap');
     }
+    if(!isset($_COOKIE['token'])){
+        header('Location: ./dang-nhap');
+    }
 @endphp
 @extends('Main')
-@section('title', 'Khách hàng')
+@section('title', 'Quản lý khách hàng')
 @section('content')
     <div class="mt-3">
         <nav class="row pe-0">

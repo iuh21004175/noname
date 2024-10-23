@@ -2,6 +2,9 @@
     if(!isset($_SESSION['user_id'])){
         header('Location: ./dang-nhap');
     }
+    if(!isset($_COOKIE['token'])){
+        header('Location: ./dang-nhap');
+    }
 @endphp
 @extends('MainNoNav')
 @section('title', 'Đơn hàng chi tiết')
@@ -33,7 +36,7 @@
                     <p><strong>Tích điểm sử dụng:</strong> {{$donHang['TichDiemSuDung']}}</p>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <p><strong>Tổng tiền:</strong> {{$donHang['TongTien']}} VND</p>
+                    <p><strong>Tổng tiền:</strong> {{number_format($donHang['TongTien'], 0, ',', '.')}} <i class="fa-solid fa-dong-sign"></i></p>
                 </div>
                 <div class="col-md-6 mb-3">
                     <p><strong>Người quản lý:</strong> {{$nhanVien['TenNhanVien']}} | Mã nhân viên: {{$nhanVien['MaNhanVien']}}</p>

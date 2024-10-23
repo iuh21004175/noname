@@ -1,6 +1,0 @@
-CanvasJS
-Frappe Charts
-C3.js
-NVD3
-Chartist.js
-Google Charts

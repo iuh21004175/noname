@@ -4,7 +4,7 @@
     }
 @endphp
 @extends('Main')
-@section('title', 'Thực đơn')
+@section('title', 'Quản lý thực đơn')
 @section('content')
     <div class="mt-3">
         <nav class="d-flex pe-0">

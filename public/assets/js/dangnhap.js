@@ -1,3 +1,34 @@
+async function checkToken(){
+    try {
+        // Gọi fetch API để kiểm tra phiên đăng nhập
+        const response = await fetch('./fetch/kiem-tra-phien-dang-nhap', {
+            method: 'POST'
+        });
+
+        // Kiểm tra kết quả trả về
+        const result = await response.json();
+        if (result.status==='success') {
+            // Nếu người dùng đã đăng nhập, chuyển hướng đến dashboard
+            window.location.href = './';
+        } else {
+            if(result.message !== undefined){
+                alert(result.message)
+            }
+            // Nếu chưa đăng nhập, hiển thị form đăng nhập
+            document.getElementById('spinner').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+        }
+    } catch (error) {
+        console.error('Lỗi khi kiểm tra phiên:', error);
+        document.getElementById('spinner').style.display = 'none';
+        document.getElementById('login-form').style.display = 'block';
+    }
+}
+
+// Gọi hàm checkSession khi trang tải
+window.onload = async function() {
+    await checkToken();
+}
 document.addEventListener('DOMContentLoaded',  function (){
     document.getElementById('form-dn').addEventListener('submit', async function (event) {
         event.preventDefault(); // Ngăn form gửi đi để xử lý
@@ -46,7 +77,7 @@ document.addEventListener('DOMContentLoaded',  function (){
 
                 // Lấy dữ liệu phản hồi từ server
                 let data = await response.json();
-
+                console.log(data)
                 // Xử lý phản hồi (data) tùy theo logic của bạn
                 if (data.status === 'success') {
                     window.location.href='./'

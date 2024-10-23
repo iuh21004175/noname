@@ -1,3 +1,11 @@
+@php
+    if(!isset($_SESSION['user_id'])){
+        header('Location: ./dang-nhap');
+    }
+    if(!isset($_COOKIE['token'])){
+        header('Location: ./dang-nhap');
+    }
+@endphp
 @extends('MainNoNav')
 @section('title', 'Tạo đơn hàng')
 @section('content')

@@ -4,7 +4,12 @@
     <link rel="stylesheet" href="./public/assets/css/dangnhap.css">
 @endsection
 @section('content')
-    <div class="container">
+    <div id="spinner" class="loading-spinner">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    <div id="login-form" class="container login-form">
         <h2 class="text-center">Đăng Nhập</h2>
         <form id="form-dn">
             <div class="mb-3">

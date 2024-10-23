@@ -1,3 +1,8 @@
+<?php 
+ if(!isset($_SESSION['user_id'])){
+ header('Location: ./dang-nhap');
+ }
+ ?>
 <?php $_shouldextend[1]=1; ?>
 <?php $this->startSection('title', 'Trang chủ'); ?>
 <?php $this->startSection('link'); ?>

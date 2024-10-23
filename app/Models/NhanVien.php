@@ -11,6 +11,7 @@ class NhanVien extends Model
     public $incrementing = false;
     protected $keyType = 'string';
     protected $fillable = [
+        'MaNhanVien',
         'TenNhanVien',
         'NgaySinh',
         'DiaChi',

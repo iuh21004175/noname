@@ -41,3 +41,22 @@ h2 {
 .text-danger {
     font-size: 12px;
 }
+.spinner-container {
+    display: none; /* Mặc định ẩn */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.login-form {
+    display: none; /* Ẩn form đăng nhập trong khi đang kiểm tra phiên */
+}
+
+/* Hiển thị spinner chính giữa */
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}

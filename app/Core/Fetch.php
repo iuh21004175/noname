@@ -26,6 +26,10 @@ class Fetch
                 $ctrl = new CtrlDangNhap();
                 echo json_encode($ctrl->dangNhap($data['username'], $data['password']));
             });
+            $r->addRoute('POST', '/kiem-tra-phien-dang-nhap', function () {
+                $ctrl = new CtrlDangNhap();
+                echo json_encode($ctrl->kiemTraPhienDangNhap());
+            });
             if(isset($_SESSION['user_id'])){
                 $r->addRoute('GET', '/danh-sach-do-an-uong', function () {
                     $ctrl = new CtrlDonHang();

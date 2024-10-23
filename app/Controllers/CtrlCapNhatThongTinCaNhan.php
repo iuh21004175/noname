@@ -7,16 +7,15 @@ use App\Models\NhanVien;
 
 class CtrlCapNhatThongTinCaNhan extends Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->capsule->getConnection()->statement('CALL  CapNhatHoatDongCuoi("'.$_SESSION['user_id'].'")');
+    }
     public function index()
     {
-        if(isset($_SESSION['user_id'])){
-            $nhanVien = NhanVien::where('MaNhanVien', $_SESSION['user_id'])->first();
-            return $this->view('Pages.ThongTinCaNhan', ['nhanVien' => $nhanVien]);
-        }
-        else{
-            header('Location: ./dang-nhap');
-        }
-
+        $nhanVien = NhanVien::where('MaNhanVien', $_SESSION['user_id'])->first();
+        return $this->view('Pages.ThongTinCaNhan', ['nhanVien' => $nhanVien]);
     }
     public function capNhatThongTinCaNhan($caNhan)
     {
