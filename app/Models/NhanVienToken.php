@@ -13,7 +13,8 @@ class NhanVienToken extends Model
     protected $fillable = [
         'MaNhanVien',
         'Token',
-        'HoatDongCuoi'
+        'HoatDongCuoi',
+        'KetThucPhien'
     ];
     public $timestamps = false;
 }

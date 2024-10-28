@@ -1,11 +1,3 @@
-@php
-    if(!isset($_SESSION['user_id'])){
-        header('Location: ./dang-nhap');
-    }
-    if(!isset($_COOKIE['token'])){
-        header('Location: ./dang-nhap');
-    }
-@endphp
 @extends('MainNoNav')
 @section('title', 'Khách hàng chi tiết')
 @section('content')
@@ -59,7 +51,7 @@
                             <td>{{$stt++}}</td>
                             <td>{{$donHang['MaDonHang']}}</td>
                             <td>{{$donHang['NgayLap']}}</td>
-                            <td>{{$donHang['TongTien']}} VND</td>
+                            <td>{{number_format($donHang['TongTien'], 0, ',', '.')}} <i class="fa-solid fa-dong-sign"></i></td>
                             <td><a href="./don-hang-chi-tiet-{{$donHang['MaDonHang']}}" class="btn btn-info btn-sm">Xem</a></td>
                         </tr>
                     @endforeach

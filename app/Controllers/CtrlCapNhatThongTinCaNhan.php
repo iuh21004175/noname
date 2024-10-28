@@ -10,7 +10,7 @@ class CtrlCapNhatThongTinCaNhan extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->capsule->getConnection()->statement('CALL  CapNhatHoatDongCuoi("'.$_SESSION['user_id'].'")');
+        $this->kiemTraToken();
     }
     public function index()
     {

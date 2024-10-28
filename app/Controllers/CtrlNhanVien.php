@@ -15,7 +15,7 @@ class CtrlNhanVien extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->capsule->getConnection()->statement('CALL  CapNhatHoatDongCuoi("'.$_SESSION['user_id'].'")');
+        $this->kiemTraToken();
     }
 
     public function index(){
@@ -74,44 +74,36 @@ class CtrlNhanVien extends Controller
         $result = null;
         $nhanVienDB = NhanVien::where('MaNhanVien', $nhanVien['MaNhanVien'])->first();
         $trangThaiHoatDong = $nhanVienDB['TrangThaiHoatDong'];
-        $trangThai = $nhanVienDB['TrangThai'];
         $soDienThoai = $nhanVienDB['SoDienThoai'];
-        $tenNhanVien = $nhanVienDB['TenNhanVien'];
         if($nhanVien['MatKhau'] == ''){
             $result = $nhanVienDB->update([
-                'TenNhanVien' => $trangThaiHoatDong == 'Online' ? $nhanVienDB['TenNhanVien'] : $nhanVien['TenNhanVien'],
+                'TenNhanVien' => $nhanVien['TenNhanVien'],
                 'NgaySinh' => $nhanVien['NgaySinh'],
                 'DiaChi' => $nhanVien['DiaChi'],
                 'SoDienThoai' => $trangThaiHoatDong == 'Online' ? $nhanVienDB['SoDienThoai'] : $nhanVien['SoDienThoai'],
                 'Email' => $nhanVien['Email'],
                 'GhiChu' => $nhanVien['GhiChu'],
-                'TrangThai' => $trangThaiHoatDong == 'Online' ? $nhanVienDB['TrangThai'] : $nhanVien['TrangThai']
+                'TrangThai' => $nhanVien['TrangThai']
             ]);
 
         }
         else{
             $result = $nhanVienDB->update([
-                'TenNhanVien' => $trangThaiHoatDong == 'Online' ? $nhanVienDB['TenNhanVien'] : $nhanVien['TenNhanVien'],
+                'TenNhanVien' => $nhanVien['TenNhanVien'],
                 'NgaySinh' => $nhanVien['NgaySinh'],
                 'DiaChi' => $nhanVien['DiaChi'],
                 'SoDienThoai' => $trangThaiHoatDong == 'Online' ? $nhanVienDB['SoDienThoai'] : $nhanVien['SoDienThoai'],
                 'Email' => $nhanVien['Email'],
                 'MatKhau' => md5($nhanVien['MatKhau']),
                 'GhiChu' => $nhanVien['GhiChu'],
-                'TrangThai' => $trangThaiHoatDong == 'Online' ? $nhanVienDB['TrangThai'] : $nhanVien['TrangThai']
+                'TrangThai' =>  $nhanVien['TrangThai']
             ]);
 
         }
         
         if($result){
-            if($nhanVienDB['TrangThaiHoatDong'] == 'Online' && $trangThai != $nhanVien['TrangThai']){
-                return array('status' => 'success', 'message' => 'Không thể cập nhật trang thái khi nhân viên đang online');
-            }
             if($nhanVienDB['TrangThaiHoatDong'] == 'Online' && $soDienThoai != $nhanVien['SoDienThoai']){
                 return array('status' => 'success', 'message' => 'Không thể cập nhật số điện thoại khi nhân viên đang online');
-            }
-            if($nhanVienDB['TrangThaiHoatDong'] == 'Online' && $tenNhanVien != $nhanVien['TenNhanVien']){
-                return array('status' => 'success', 'message' => 'Không thể cập nhật tên nhân viên khi nhân viên đang online');
             }
             return array('status' => 'success');
         }

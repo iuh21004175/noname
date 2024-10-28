@@ -9,21 +9,23 @@
             <span class="visually-hidden">Loading...</span>
         </div>
     </div>
-    <div id="login-form" class="container login-form">
-        <h2 class="text-center">Đăng Nhập</h2>
-        <form id="form-dn">
-            <div class="mb-3">
-                <label for="username" class="form-label">Tên Đăng Nhập <span class="user-error text-danger"></span></label>
-                <input type="text" class="form-control" id="username" placeholder="Nhập tên đăng nhập">
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Mật Khẩu <span class="password-error text-danger"></span></label>
-                <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu">
-            </div>
-            <div class="d-grid">
-                <input type="submit" class="btn btn-primary" value="Đăng Nhập">
-            </div>
-        </form>
+    <div class="wrapper d-flex justify-content-center align-items-center" id="login-form">
+        <div class="overlay text-center">
+            <h2 class="text-white">Đăng Nhập</h2>
+            <form id="form-dn">
+                <div class="mb-3 text-start">
+                    <label for="username" class="form-label text-white">Tên Đăng Nhập <span class="user-error text-danger"></span></label>
+                    <input type="text" class="form-control" id="username" placeholder="Nhập tên đăng nhập">
+                </div>
+                <div class="mb-3 text-start">
+                    <label for="password" class="form-label text-white">Mật Khẩu <span class="password-error text-danger"></span></label>
+                    <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu">
+                </div>
+                <div class="d-grid">
+                    <input type="submit" class="btn btn-secondary" value="Đăng Nhập">
+                </div>
+            </form>
+        </div>
     </div>
 @endsection
 <script src="./public/assets/js/popper.min.js"></script>

@@ -27,11 +27,11 @@ document.addEventListener('DOMContentLoaded', async function (){
                 if(donHang.TrangThai !==1){
                     xoaButton = ` <button class="btn btn-outline-danger btn-xoa" data-bs-toggle="modal" data-bs-target="#message-xoa" value="${donHang.MaDonHang}">Xóa</button>`
                 }
-                row.innerHTML = `<td >${index + 1}</td>
-                            <td >${donHang.MaDonHang}</td>
-                            <td >${donHang.SoDienThoai}</td>
-                            <td >${donHang.NgayLap}</td>
-                            <td >${parseInt(donHang.TongTien).toLocaleString('de-DE')} <i class="fa-solid fa-dong-sign"></i></td>
+                row.innerHTML = `<td class="align-middle text-center">${index + 1}</td>
+                            <td class="align-middle">${donHang.MaDonHang}</td>
+                            <td class="align-middle">${donHang.SoDienThoai}</td>
+                            <td class="align-middle">${donHang.NgayLap}</td>
+                            <td class="align-middle">${parseInt(donHang.TongTien).toLocaleString('de-DE')} <i class="fa-solid fa-dong-sign"></i></td>
                             <td >
                                 <a class="btn btn-light" href="./don-hang-chi-tiet-${donHang.MaDonHang}">Xem</a>
                                ${xoaButton}

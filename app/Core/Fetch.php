@@ -103,28 +103,30 @@ class Fetch
                     $data = json_decode($json, true);
                     echo json_encode($ctrl->capNhatKhuyenMai($data));
                 });
-                $r->addRoute('GET', '/danh-sach-nhan-vien-theo-trang-thai-{trangThai}', function ($trangThai) {
-                    $ctrl = new CtrlNhanVien();
-                    echo json_encode($ctrl->layDanhSachNhanVienTheoTrangThai($trangThai));
-                });
-                $r->addRoute('POST', '/them-nhan-vien', function () {
-                    $ctrl = new CtrlNhanVien();
-                    $json = file_get_contents('php://input');
-                    $data = json_decode($json, true);
-                    echo json_encode($ctrl->themNhanVien($data));
-                });
-                $r->addRoute('POST', '/xoa-nhan-vien', function () {
-                    $ctrl = new CtrlNhanVien();
-                    $json = file_get_contents('php://input');
-                    $data = json_decode($json, true);
-                    echo json_encode($ctrl->xoaNhanVien($data['MaNhanVien']));
-                });
-                $r->addRoute('POST', '/cap-nhat-nhan-vien', function () {
-                    $ctrl = new CtrlNhanVien();
-                    $json = file_get_contents('php://input');
-                    $data = json_decode($json, true);
-                    echo json_encode($ctrl->capNhatNhanVien($data));
-                });
+                if($_SESSION['role'] == 'LNV0000001'){
+                    $r->addRoute('GET', '/danh-sach-nhan-vien-theo-trang-thai-{trangThai}', function ($trangThai) {
+                        $ctrl = new CtrlNhanVien();
+                        echo json_encode($ctrl->layDanhSachNhanVienTheoTrangThai($trangThai));
+                    });
+                    $r->addRoute('POST', '/them-nhan-vien', function () {
+                        $ctrl = new CtrlNhanVien();
+                        $json = file_get_contents('php://input');
+                        $data = json_decode($json, true);
+                        echo json_encode($ctrl->themNhanVien($data));
+                    });
+                    $r->addRoute('POST', '/xoa-nhan-vien', function () {
+                        $ctrl = new CtrlNhanVien();
+                        $json = file_get_contents('php://input');
+                        $data = json_decode($json, true);
+                        echo json_encode($ctrl->xoaNhanVien($data['MaNhanVien']));
+                    });
+                    $r->addRoute('POST', '/cap-nhat-nhan-vien', function () {
+                        $ctrl = new CtrlNhanVien();
+                        $json = file_get_contents('php://input');
+                        $data = json_decode($json, true);
+                        echo json_encode($ctrl->capNhatNhanVien($data));
+                    });
+                }
                 $r->addRoute('POST', '/cap-nhat-thong-tin-ca-nhan', function () {
                     $ctrl = new CtrlCapNhatThongTinCaNhan();
                     $json = file_get_contents('php://input');
@@ -157,23 +159,7 @@ class Fetch
                     $file = isset($_FILES['file']) ? $_FILES['file'] : null;
                     echo json_encode($ctrl->capNhatDoAnUong($data, $file));
                 });
-                $r->addRoute('GET', '/top-5-do-an-ua-chuong-nhat-nam-{nam}', function ($nam){
-                    $ctrl = new CtrlTrangChu();
-                    echo json_encode($ctrl->layNamDoAnTopTheoNam($nam));
-                });
-                $r->addRoute('GET', '/top-5-do-uong-ua-chuong-nhat-nam-{nam}', function ($nam){
-                    $ctrl = new CtrlTrangChu();
-                    echo json_encode($ctrl->layNamDoUongTopTheoNam($nam));
-                });
             }
-            $r->addRoute('GET', '/danh-sach-don-hang-BI', function () {
-                $ctrl = new CtrlDonHang();
-                echo json_encode($ctrl->layDanhSachDonHangBI());
-            });
-            $r->addRoute('GET', '/danh-sach-khach-hang-BI', function () {
-                $ctrl = new CtrlKhachHang();
-                echo json_encode($ctrl->layDanhSachKhachHangBI());
-            });
         });
         $httpMethod = $_SERVER['REQUEST_METHOD'];
         $uri = $_SERVER['REQUEST_URI'];

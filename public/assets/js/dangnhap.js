@@ -7,6 +7,7 @@ async function checkToken(){
 
         // Kiểm tra kết quả trả về
         const result = await response.json();
+        console.log(result)
         if (result.status==='success') {
             // Nếu người dùng đã đăng nhập, chuyển hướng đến dashboard
             window.location.href = './';

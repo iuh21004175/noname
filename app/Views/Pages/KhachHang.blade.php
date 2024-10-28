@@ -1,11 +1,3 @@
-@php
-    if(!isset($_SESSION['user_id'])){
-        header('Location: ./dang-nhap');
-    }
-    if(!isset($_COOKIE['token'])){
-        header('Location: ./dang-nhap');
-    }
-@endphp
 @extends('Main')
 @section('title', 'Quản lý khách hàng')
 @section('content')
@@ -42,7 +34,7 @@
                         <th>Họ và tên</th>
                         <th>Số điện thoại</th>
                         <th>Tích điểm</th>
-                        <th>Thao tác</th>
+                        <th>&nbsp;</th>
                     </tr>
                     </thead>
                     <tbody>

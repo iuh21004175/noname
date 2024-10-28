@@ -1,12 +1,8 @@
-@php
-    if(!isset($_SESSION['user_id'])){
-        header('Location: ./dang-nhap');
-    }
-@endphp
 @extends('MainNoNav')
 @section('title', 'Trang chủ')
 @section('link')
     <link rel="stylesheet" href="./public/assets/css/trangchu.css">
+@endsection
 @section('content')
     <div class="row">
         <div class="wrapper d-flex justify-content-center align-items-center">
@@ -20,7 +16,6 @@
                 @if($_SESSION['role'] == 'LNV0000001')
                     <a href="./nhan-vien" class="btn btn-custom text-white ms-3">Quản Lý Nhân Viên</a>
                 @endif
-                <br>
                 <a href="./thong-tin-ca-nhan" class="btn btn-custom text-white">Thông tin cá nhân</a>
                 <a href="#" id="btn-dangXuat" class="btn btn-custom text-white ms-3">Đăng xuất</a>
             </div>

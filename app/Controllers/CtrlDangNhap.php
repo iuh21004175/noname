@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Models\NhanVien;
 use App\Models\NhanVienToken;
+use DateTime;
 
 class CtrlDangNhap extends Controller
 {
@@ -15,32 +16,34 @@ class CtrlDangNhap extends Controller
     function kiemTraPhienDangNhap()
     {
         if(isset($_COOKIE['token'])){
-            $nhanVienToken = NhanVienToken::where('Token',$_COOKIE['token'])->first();
-            if($nhanVienToken){
-                // Lấy thời gian hoạt động cuối cùng từ cơ sở dữ liệu
-                $hoatDongCuoi = new \DateTime($nhanVienToken['HoatDongCuoi'], new \DateTimeZone('Asia/Ho_Chi_Minh'));
-
+            $nhanVienToken = NhanVienToken::where('Token', md5($_COOKIE['token']))->first();
+            if($nhanVienToken != null){
+                $nhanVien = NhanVien::where('MaNhanVien', $nhanVienToken->MaNhanVien)->first();
+                if($nhanVien['TrangThai'] == 0){
+                    $nhanVienToken->delete();
+                    setcookie('token', '', time() - 3600, "/");
+                    return ['status' => 'fail', 'message' => 'Tài khoản này đã ngưng hoạt động'];
+                }
                 // Lấy thời gian hiện tại với cùng múi giờ
-                $hienTai = new \DateTime('now', new \DateTimeZone('Asia/Ho_Chi_Minh'));
-
-                // Tính khoảng cách thời gian giữa hoạt động cuối và hiện tại
-                $khoangThoiGian = $hienTai->diff($hoatDongCuoi);
-
-                // Chuyển đổi khoảng cách thành phút
-                $phutKhacBiet = ($khoangThoiGian->h * 60) + $khoangThoiGian->i;
+                $hienTai = new \DateTime();
+                $ketThucPhien = new DateTime($nhanVienToken['KetThucPhien']);
+                $hoatDongCuoi = new \DateTime($nhanVienToken['HoatDongCuoi']);
 
                 // Kiểm tra nếu khoảng cách thời gian nhỏ hơn 30 phút
-                if ($phutKhacBiet <= 30) {
+                if ($hienTai <= $ketThucPhien && $hienTai > $hoatDongCuoi) {
                     $nhanVien = NhanVien::where('MaNhanVien',$nhanVienToken['MaNhanVien'])->first();
                     $_SESSION['user_id'] = $nhanVien['MaNhanVien'];
                     $_SESSION['username'] = $nhanVien['TenNhanVien'];
                     $_SESSION['role'] = $nhanVien['MaLoaiNhanVien'];
                     $_SESSION['image_user'] = $nhanVien['HinhAnh'];
+                    $_SESSION['token'] = $_COOKIE['token'];
+                    setcookie('token', $_SESSION['token'], time() + 1800, "/", "", false, true);  // HTTP Only cookie
                     $this->capsule->getConnection()->statement('CALL CapNhatTatCaTrangThaiHoatDong()');
                     return ['status'=>'success'];
                 } else {
+                    $nhanVienToken->delete();
                     setcookie('token', '', time() - 3600, "/");  // Đặt thời gian hết hạn là 1 giờ trước
-                    return ['status'=>'fail', 'message' => 'Phiên đăng nhập đã hết hạn'.$phutKhacBiet];
+                    return ['status'=>'fail', 'message' => 'Phiên đăng nhập đã hết hạn'.$ketThucPhien];
                 }
             }
             else{
@@ -57,66 +60,71 @@ class CtrlDangNhap extends Controller
         $md5mk = md5($matkhau);
         $nhanVien = NhanVien::where('SoDienThoai', $tendn)
             ->where('MatKhau', $md5mk)
-            ->where('TrangThai', 1)
             ->first();
 
         if ($nhanVien != null) {
-            $nhanVienToken = NhanVienToken::where('MaNhanVien', $nhanVien['MaNhanVien'])->first();
-            if ($nhanVienToken == null) {
-                // Đăng nhập thành công
-                $token = $this->generateUniqueToken();
-
-                // Tạo token trong bảng NhanVienToken
-                NhanVienToken::create([
-                    'MaNhanVien' => $nhanVien['MaNhanVien'],
-                    'Token' => $token,
-                    'HoatDongCuoi' => date('Y-m-d H:i:s')
-                ]);
-
-                // Lưu thông tin đăng nhập vào session
-                $_SESSION['user_id'] = $nhanVien['MaNhanVien'];
-                $_SESSION['username'] = $nhanVien['TenNhanVien'];
-                $_SESSION['role'] = $nhanVien['MaLoaiNhanVien'];
-                $_SESSION['image_user'] = $nhanVien['HinhAnh'];
-
-                // Lưu token vào cookie với thời gian sống 30 phút
-                setcookie('token', $token, time() + 1800, "/", "", false, true);  // HTTP Only cookie
-                $this->capsule->getConnection()->statement('CALL CapNhatTatCaTrangThaiHoatDong()');
-                return array('status' => 'success');
-
-            } else {
-                $hoatDongCuoi = new \DateTime($nhanVienToken['HoatDongCuoi']);
-                $hienTai = new \DateTime();
-                $khoangThoiGian = $hienTai->diff($hoatDongCuoi);
-                $phutKhacBiet = ($khoangThoiGian->h * 60) + $khoangThoiGian->i;
-
-                if ($phutKhacBiet > 30) {
-                    // Xóa token cũ và tạo token mới
+            if($nhanVien['TrangThai'] == 1){
+                $nhanVienToken = NhanVienToken::where('MaNhanVien', $nhanVien['MaNhanVien'])->first();
+                if ($nhanVienToken == null) {
+                    // Đăng nhập thành công
                     $token = $this->generateUniqueToken();
-                    $nhanVienToken->delete();
 
+                    // Tạo token trong bảng NhanVienToken
                     NhanVienToken::create([
                         'MaNhanVien' => $nhanVien['MaNhanVien'],
-                        'Token' => $token,
-                        'HoatDongCuoi' => date('Y-m-d H:i:s')
+                        'Token' => md5($token),
+                        'HoatDongCuoi' => date('Y-m-d H:i:s'),
+                        'KetThucPhien' => date('Y-m-d H:i:s', strtotime('+30 minutes'))
                     ]);
 
-                    // Cập nhật session và cookie
+                    // Lưu thông tin đăng nhập vào session
                     $_SESSION['user_id'] = $nhanVien['MaNhanVien'];
                     $_SESSION['username'] = $nhanVien['TenNhanVien'];
                     $_SESSION['role'] = $nhanVien['MaLoaiNhanVien'];
                     $_SESSION['image_user'] = $nhanVien['HinhAnh'];
-
-                    setcookie('token', $token, time() + 1800, "/", "", false, true);
+                    $_SESSION['token'] = $token;
+                    // Lưu token vào cookie với thời gian sống 30 phút
+                    setcookie('token', $token, time() + 1800, "/", "", false, true);  // HTTP Only cookie
                     $this->capsule->getConnection()->statement('CALL CapNhatTatCaTrangThaiHoatDong()');
                     return array('status' => 'success');
-                } else {
-                    return array('status' => 'fail', 'message' => 'Tài khoản này đã đăng nhập');
+
+                }
+                else {
+                    // Lấy thời gian hiện tại với cùng múi giờ
+                    $hienTai = new \DateTime();
+                    $ketThucPhien = new DateTime($nhanVienToken['KetThucPhien']);
+                    if ($hienTai > $ketThucPhien) { //Kiểm tra phiên hết hạn tạo phiên mới
+                        // Xóa token cũ và tạo token mới
+                        $token = $this->generateUniqueToken();
+                        $nhanVienToken->delete();
+
+                        NhanVienToken::create([
+                            'MaNhanVien' => $nhanVien['MaNhanVien'],
+                            'Token' => md5($token),
+                            'HoatDongCuoi' => date('Y-m-d H:i:s'),
+                            'KetThucPhien' => date('Y-m-d H:i:s', strtotime('+30 minutes'))
+                        ]);
+                        // Cập nhật session và cookie
+                        $_SESSION['user_id'] = $nhanVien['MaNhanVien'];
+                        $_SESSION['username'] = $nhanVien['TenNhanVien'];
+                        $_SESSION['role'] = $nhanVien['MaLoaiNhanVien'];
+                        $_SESSION['image_user'] = $nhanVien['HinhAnh'];
+                        $_SESSION['token'] = $token;
+                        setcookie('token', $token, time() + 1800, "/", "", false, true);
+                        $this->capsule->getConnection()->statement('CALL CapNhatTatCaTrangThaiHoatDong()');
+                        return array('status' => 'success');
+                    } else {
+                        return array('status' => 'fail', 'message' => 'Tài khoản này đã đăng nhập');
+                    }
                 }
             }
+            else{
+                return ['status' => 'fail', 'message' => 'Tài khoản này đã ngưng hoạt động'];
+            }
+
         } else {
             // Đăng nhập thất bại
-            return array('status' => 'fail', 'message' => 'Sai tên đăng nhập hoặc mật khẩu hoặc tài khoản đã tạm ngưng.');
+            return array('status' => 'fail', 'message' => 'Sai tên đăng nhập hoặc mật khẩu.');
         }
     }
 
@@ -126,7 +134,7 @@ class CtrlDangNhap extends Controller
             $token = bin2hex(random_bytes(32));
 
             // Kiểm tra xem token có trùng không
-            $existingToken = NhanVienToken::where('Token', $token)->first();
+            $existingToken = NhanVienToken::where('Token', md5($token))->first();
         } while ($existingToken != null);
 
         return $token;

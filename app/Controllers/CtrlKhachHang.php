@@ -13,7 +13,7 @@ class CtrlKhachHang extends Controller
     {
         parent::__construct();
         $this->capsule->getConnection()->statement('CALL CapNhatTrangThaiKhachHang()');
-        $this->capsule->getConnection()->statement('CALL  CapNhatHoatDongCuoi("'.$_SESSION['user_id'].'")');
+        $this->kiemTraToken();
     }
     public function index(){
         return $this->view('Pages.KhachHang');

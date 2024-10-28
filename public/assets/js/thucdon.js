@@ -71,14 +71,14 @@ document.addEventListener('DOMContentLoaded', async function (){
                     xoaButton = `<button class="btn btn-outline-danger btn-xoa" data-bs-toggle="modal" data-bs-target="#message-xoa" value="${doAnUong.MaDoAnUong}">Xóa</button>`;
                 }
                 newRow.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td><img src="${doAnUong.HinhAnh === '' ? './public/assets/image/mon_default.png':'./public/assets/image/'+doAnUong.HinhAnh}" alt="${doAnUong.Ten}" height="100"></td>
-                    <td>${doAnUong.MaDoAnUong}</td>
-                    <td>${doAnUong.Ten}</td>
-                    <td>${parseInt(doAnUong.Gia).toLocaleString('de-DE')} <i class="fa-solid fa-dong-sign"></i></td>
-                    <td>${doAnUong.Loai}</td>
-                    <td>${doAnUong.DonVi}</td>
-                    <td>
+                    <td class="align-middle text-center">${index + 1}</td>
+                    <td class="align-middle"><img src="${doAnUong.HinhAnh === '' ? './public/assets/image/mon_default.png':'./public/assets/image/'+doAnUong.HinhAnh}" alt="${doAnUong.Ten}" height="100"></td>
+                    <td class="align-middle">${doAnUong.MaDoAnUong}</td>
+                    <td class="align-middle">${doAnUong.Ten}</td>
+                    <td class="align-middle">${parseInt(doAnUong.Gia).toLocaleString('de-DE')} <i class="fa-solid fa-dong-sign"></i></td>
+                    <td class="align-middle">${doAnUong.Loai}</td>
+                    <td class="align-middle">${doAnUong.DonVi}</td>
+                    <td class="align-middle">
                         <a href="./thuc-don-chi-tiet-${doAnUong.MaDoAnUong}" class="btn btn-light">Xem</a>
                         ${xoaButton}
                         ${capNhatButton}

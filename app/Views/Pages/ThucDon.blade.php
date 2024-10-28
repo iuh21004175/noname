@@ -1,8 +1,3 @@
-@php
-    if(!isset($_SESSION['user_id'])){
-        header('Location: ./dang-nhap');
-    }
-@endphp
 @extends('Main')
 @section('title', 'Quản lý thực đơn')
 @section('content')
@@ -40,7 +35,7 @@
                         <th>Giá</th>
                         <th>Loại</th>
                         <th>Đơn vị</th>
-                        <th>Thao tác</th>
+                        <th>&nbsp;</th>
                     </tr>
                     </thead>
                     <tbody>

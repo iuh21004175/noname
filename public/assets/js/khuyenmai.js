@@ -57,12 +57,12 @@ document.addEventListener('DOMContentLoaded', async function (){
                     capNhatButton = `<button class="btn btn-outline-primary btn-capNhat" data-bs-toggle="modal" data-bs-target="#form-capNhat" value="${khuyenMai.MaKhuyenMai}">Cập nhật</button>`
                 }
                 newRow.innerHTML = `
-                <td >${index + 1}</td>
-                <td>${khuyenMai.MaKhuyenMai}</td>
-                <td>${khuyenMai.ChuDe}</td>
-                <td>${khuyenMai.PhanTram}</td>
-                <td>${khuyenMai.BatDau}</td>
-                <td>${khuyenMai.KetThuc}</td>
+                <td class="align-middle text-center">${index + 1}</td>
+                <td class="align-middle">${khuyenMai.MaKhuyenMai}</td>
+                <td class="align-middle">${khuyenMai.ChuDe}</td>
+                <td class="align-middle">${parseFloat(khuyenMai.PhanTram)*100} %</td>
+                <td class="align-middle">${khuyenMai.BatDau}</td>
+                <td class="align-middle">${khuyenMai.KetThuc}</td>
                 <td>
                     <a href="./khuyen-mai-chi-tiet-${khuyenMai.MaKhuyenMai}" class="btn btn-light">Xem</a>
                     <button class="btn btn-outline-danger btn-xoa" data-bs-toggle="modal" data-bs-target="#message-xoa" value="${khuyenMai.MaKhuyenMai}">Xóa</button>

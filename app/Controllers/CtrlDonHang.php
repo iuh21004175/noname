@@ -17,7 +17,7 @@ class CtrlDonHang extends Controller
     {
         parent::__construct();
         $this->capsule->getConnection()->statement('CALL  CapNhatTrangThaiDonHangKhoa()');
-        $this->capsule->getConnection()->statement('CALL  CapNhatHoatDongCuoi("'.$_SESSION['user_id'].'")');
+        $this->kiemTraToken();
     }
 
     public function index(){
@@ -48,18 +48,6 @@ class CtrlDonHang extends Controller
                             ->where('NgayLap', '<=', $end)
                             ->orderBy('NgayLap', 'desc')
                             ->get();
-        foreach ($donHang as $dh) {
-            $khachHang = KhachHang::where('MaKhachHang', $dh['MaKhachHang'])->first();
-            $dh['SoDienThoai'] = $khachHang != null ? $khachHang['SoDienThoai'] : '';
-        }
-        return $donHang;
-    }
-    public function layDanhSachDonHangBI(){
-        $donHang = DonHang::all();
-        return $donHang;
-    }
-    public function layDanhSachDonHangTheoTrangThai($trangThai){
-        $donHang = DonHang::where('TrangThai', $trangThai)->orderBy('NgayLap', 'desc')->get();
         foreach ($donHang as $dh) {
             $khachHang = KhachHang::where('MaKhachHang', $dh['MaKhachHang'])->first();
             $dh['SoDienThoai'] = $khachHang != null ? $khachHang['SoDienThoai'] : '';

@@ -57,11 +57,11 @@ document.addEventListener('DOMContentLoaded', async function (){
                     xoaButton = `<button class="btn btn-outline-danger btn-xoa" data-bs-toggle="modal" data-bs-target="#message-xoa" value="${nhanVien.MaNhanVien}">Xóa</button>`
                 }
                 newRow.innerHTML = `
-                <td >${index + 1}</td>
-                <td>${nhanVien.MaNhanVien}</td>
-                <td>${nhanVien.TenNhanVien}</td>
-                <td>${nhanVien.TenLoaiNhanVien}</td>
-                <td>${nhanVien.TrangThaiHoatDong}</td>
+                <td class="align-middle text-center">${index + 1}</td>
+                <td class="align-middle">${nhanVien.MaNhanVien}</td>
+                <td class="align-middle">${nhanVien.TenNhanVien}</td>
+                <td class="align-middle">${nhanVien.TenLoaiNhanVien}</td>
+                <td class="align-middle">${nhanVien.TrangThaiHoatDong}</td>
                 <td>
                     <a href="./nhan-vien-chi-tiet-${nhanVien.MaNhanVien}" class="btn btn-light">Xem</a>
                     ${xoaButton}

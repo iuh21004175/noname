@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     const eKMTD = document.querySelector('#khuyenMai-tichDiem')
 
 
-    const txtKhuyenMai = document.querySelector('#txt-khuyenMai')
+    const khuyenMaiChuDe = document.querySelector('#khuyenMai')
+    const txtTiLeKhuyenMai = document.querySelector('#txt-tiLeKhuyenMai')
     const txtTichDiem = document.querySelector('#txt-tichDiem')
     const txtSoTienKhachHang = document.querySelector('#txt-soTienKhachHang')
     const txtTinhTien = document.querySelector('#txt-tienThoi')
@@ -35,7 +36,8 @@ document.addEventListener('DOMContentLoaded', async function () {
                 }
                 let data = await response.json()
                 if(data !== null){
-                    txtKhuyenMai.value = data.ChuDe
+                    khuyenMaiChuDe.textContent = data.ChuDe
+                    txtTiLeKhuyenMai.value = parseInt(parseFloat(data.PhanTram) * 100) + ' %'
                     maKhuyenMai = data.MaKhuyenMai
                     khuyenMai = parseFloat(data.PhanTram)
 
@@ -73,22 +75,25 @@ document.addEventListener('DOMContentLoaded', async function () {
         ds.forEach(function (doAnUong) {
             const srcIMG = doAnUong.HinhAnh === '' ? './public/assets/image/mon_default.png':`./public/assets/image/${doAnUong.HinhAnh}`
             const newRow = `<tr>
-                                <td><img src="${srcIMG}" alt="${doAnUong.Ten}" height="100"></td>
-                                <td>${doAnUong.Ten}</td>
-                                <td>${parseInt(doAnUong.Gia).toLocaleString('de-DE')} <i class="fa-solid fa-dong-sign"></i></td>
-                                <td><button type="button" value="${doAnUong.MaDoAnUong}">Chọn</button></td>
+                                <td>
+                                    <img src="${srcIMG}" alt="${doAnUong.Ten}" height="100">
+                                    <input type="hidden" class="mon" value="${doAnUong.MaDoAnUong}">
+                                </td>
+                                <td class="align-middle">${doAnUong.Ten}</td>
+                                <td class="align-middle">${parseInt(doAnUong.Gia).toLocaleString('de-DE')} <i class="fa-solid fa-dong-sign"></i></td>
                             </tr>`;
             tableMenu.innerHTML += newRow;
         });
 
         // Sau khi danh sách được render, gán sự kiện click cho từng dòng
-        let btnMenus = tableMenu.querySelectorAll('button');
-        btnMenus.forEach(function (element) {
-            element.onclick = function () {
-                let indexDoAnUong = ds.findIndex(item => item.MaDoAnUong === element.value);
+        let rows = tableMenu.querySelectorAll('tr');
+        rows.forEach(function (row) {
+            row.onclick =  async function () {
+                const mon = row.querySelector('.mon')
+                let indexDoAnUong = ds.findIndex(item => item.MaDoAnUong === mon.value);
                 let doAnUongDaXoa = ds.splice(indexDoAnUong, 1); // Lấy phần tử bị xóa
-                renderDanhSachMAnMenu(ds); // Render lại danh sách sau khi xóa
-                renderDanhSachMAnDH(doAnUongDaXoa[0])
+                await renderDanhSachMAnMenu(ds); // Render lại danh sách sau khi xóa
+                await renderDanhSachMAnDH(doAnUongDaXoa[0])
                 ktDonHang = true
                 if(ktKhachHang && ktDonHang ) {
                     eKMTD.classList.remove('d-none')
@@ -97,6 +102,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     eKMTD.classList.add('d-none')
                 }
                 btnTaoDonHang.removeAttribute('disabled')
+                await apDungKM()
                 tinhTongTien()
             };
         });
@@ -108,23 +114,28 @@ document.addEventListener('DOMContentLoaded', async function () {
         let btnBoS = tableListMon.querySelectorAll('.btn-bo')
         newRow.style.cursor = 'pointer'
         newRow.innerHTML =  `
-                            <td>${btnBoS.length + 1}</td>
-                            <td>${doAnUong.Ten}</td>
-                            <td>
-                                <div class="input-group">
-                                    <button type="button" class="btn-tru">-</button>
-                                    <input class="inputSL" type="text" value="1" style="width: 50px">
-                                    <button type="button" class="btn-cong">+</button>
+                            <td class="text-center align-middle">${btnBoS.length + 1}</td>
+                            <td class="text-center align-middle">${doAnUong.Ten}</td>
+                            <td class="text-center align-middle">
+                                <div class="d-flex justify-content-center">
+                                    <div class="input-group justify-content-center" style="max-width: 120px;">
+                                        <button type="button" class="btn btn-outline-secondary btn-sm btn-tru">
+                                            <i class="fas fa-minus"></i> <!-- Icon dấu trừ -->
+                                        </button>
+                                        <input class="form-control text-center inputSL" type="text" value="1" style="max-width: 50px;">
+                                        <button type="button" class="btn btn-outline-secondary btn-sm btn-cong">
+                                            <i class="fas fa-plus"></i> <!-- Icon dấu cộng -->
+                                        </button>
+                                    </div>
                                 </div>
                             </td>
-                           
-                            <td>${doAnUong.DonVi}</td>
-                            <td>${parseInt(doAnUong.Gia).toLocaleString('de-DE')} <i class="fa-solid fa-dong-sign"></i></td>
-                             <td>
+                            <td class="text-center align-middle">${doAnUong.DonVi}</td>
+                            <td class="text-center align-middle">${parseInt(doAnUong.Gia).toLocaleString('de-DE')} <i class="fa-solid fa-dong-sign"></i></td>
+                             <td class="text-center align-middle">
                                 <textarea class="txt-ghiChu form-control"  rows="2"></textarea>
                             </td>
-                            <td>
-                                <button type="button" value="${doAnUong.MaDoAnUong}" class="btn-bo">Chọn</button>
+                            <td class="text-center align-middle">
+                                <button type="button" value="${doAnUong.MaDoAnUong}" class="btn-bo btn btn-outline-danger">&times;</button>
                             </td>
                         `;
         tableListMon.appendChild(newRow);
@@ -144,7 +155,8 @@ document.addEventListener('DOMContentLoaded', async function () {
                 }
                 btnBoS = tableListMon.querySelectorAll('.btn-bo')
                 danhSachMAnMenu.push(...doAnUongDaXoa); // Chuyển món ăn bị xóa vào mảng khác
-                renderDanhSachMAnMenu(danhSachMAnMenu)
+                danhSachMAnMenu.sort((a, b) => b.MaDoAnUong.localeCompare(a.MaDoAnUong))
+                await renderDanhSachMAnMenu(danhSachMAnMenu)
 
                 if(danhSachMAnMenu.length === danhSachGoc.length){
                     ktDonHang= false
@@ -163,6 +175,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     txtTichDiem.value= tichDiem
 
                 }
+                await apDungKM()
                 tinhTongTien()
 
             }
@@ -222,7 +235,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             if(data !== null){
                 ktKhachHang = true
                 tichDiemKH = data.TichDiem
-                eKH = `Họ và tên: ${data.TenKhachHang}</br>Tích điển: ${data.TichDiem}`
+                eKH = `Họ và tên: ${data.TenKhachHang}</br>Tích điểm: ${data.TichDiem}`
                 await apDungKM()
                 tinhTongTien()
             }

@@ -1,62 +1,86 @@
 body {
-    background: linear-gradient(135deg, #6dd5ed, #2193b0);
-    height: 100vh;
+    background-image: url('../image/wapper.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Arial', sans-serif;
 }
-.container {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+
+/* Wrapper styling */
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Overlay styling for blurred effect */
+.overlay {
+    background-color: rgba(0, 0, 0, 0.5); /* Blurred effect */
+    padding: 2rem;
+    border-radius: 10px;
     max-width: 400px;
     width: 100%;
 }
+
+/* Form styling */
+.login-form {
+    color: white; /* Make the text white */
+}
+
 h2 {
     font-weight: 700;
-    color: #333;
+    color: white; /* White title text */
     margin-bottom: 30px;
+    font-size: 2.5rem; /* Increase font size */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Add text shadow for depth */
+    letter-spacing: 1.5px; /* Slightly increase letter spacing */
+    line-height: 1.2; /* Adjust line height */
 }
+
+
 .form-control {
     border-radius: 10px;
     padding: 10px;
     font-size: 16px;
+    background-color: transparent; /* Make input backgrounds transparent */
+    color: white; /* White input text */
+    border: 1px solid #ccc; /* Border color */
 }
-.btn-primary {
-    background: #2193b0;
-    border: none;
+
+.form-control::placeholder {
+    color: #ddd; /* Placeholder text color */
+}
+
+.btn-secondary {
+    background: transparent; /* Gray button */
+    border: 1px solid white;
     padding: 12px;
     border-radius: 10px;
     transition: background-color 0.3s ease;
 }
-.btn-primary:hover {
-    background: #6dd5ed;
-}
+
+
 .mb-3 label {
     font-weight: bold;
-    color: #555;
+    color: white; /* White label text */
+    text-align: left; /* Left align labels */
 }
+
 .text-danger {
     font-size: 12px;
+    color: #ff6b6b; /* Keep error messages in red */
 }
-.spinner-container {
-    display: none; /* Mặc định ẩn */
+
+.loading-spinner {
+    display: none; /* Hide the spinner by default */
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
-
-.login-form {
-    display: none; /* Ẩn form đăng nhập trong khi đang kiểm tra phiên */
-}
-
-/* Hiển thị spinner chính giữa */
-.loading-spinner {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
 }

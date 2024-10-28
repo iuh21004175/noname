@@ -1,7 +1,4 @@
 @php
-    if(!isset($_SESSION['user_id'])){
-        header('Location: ./dang-nhap');
-    }
     if($_SESSION['role'] != 'LNV0000001'){
         header('Location: ./');
     }

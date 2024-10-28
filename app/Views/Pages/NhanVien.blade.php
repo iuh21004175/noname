@@ -1,7 +1,4 @@
 @php
-    if(!isset($_SESSION['user_id'])){
-        header('Location: ./dang-nhap');
-    }
     if($_SESSION['role'] != 'LNV0000001'){
         header('Location: ./');
     }
@@ -43,7 +40,7 @@
                         <th>Họ và tên</th>
                         <th>Loại nhân viên</th>
                         <th>Trạng thái hoạt động</th>
-                        <th>Thao tác</th>
+                        <th>&nbsp;</th>
                     </tr>
                     </thead>
                     <tbody>

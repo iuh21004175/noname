@@ -1,42 +1,52 @@
-@php
-    if(!isset($_SESSION['user_id'])){
-        header('Location: ./dang-nhap');
-    }
-    if(!isset($_COOKIE['token'])){
-        header('Location: ./dang-nhap');
-    }
-@endphp
 @extends('MainNoNav')
 @section('title', 'Tạo đơn hàng')
+@section('link')
+    <link rel="stylesheet" href="./public/assets/css/donhangtao.css">
+@endsection
 @section('content')
     <div>
-        <a href="./don-hang">Quản lý đơn hàng</a>
         <div class="row">
-
             <div class="col-7" id="form-donHang">
                 <form>
-                    <h4 class="text-center">Đơn hàng</h4>
-                    <div class="row mb-2">
-                        <div class="col-5">
-                            <label class="form-label fw-bold" for="txt-soDT">Khách hàng</label>
-                            <input type="text" class="form-control" maxlength="10" name="txt-soDT" id="txt-soDT" placeholder="Nhập số điện thoại">
+                    <h3 class="text-center mt-2 text-uppercase">Đơn hàng</h3>
+                    <div class="row mb-2" style="height: 170px">
+                        <div class="col-5 border">
+                            <div class="">
+                                <h5 class="text-uppercase mt-2">Thông tin khách hàng</h5>
+                                <input type="text" class="form-control border-0 border-bottom" maxlength="10" name="txt-soDT" id="txt-soDT" placeholder="Nhập số điện thoại" style="border-color: #000000 !important; border-radius: 0;">
+                            </div>
+                            <div class="" id="thongTinKH">
+
+                            </div>
                         </div>
-                        <div class="col-7" id="thongTinKH">
+                        <div class="col-7 border" >
+                            <h5 class="text-uppercase mt-2">Khuyến mãi và tích điểm</h5>
+                            <div id="khuyenMai-tichDiem" class="d-none">
+                                <div class="mb-2">
+                                    <b>Khuyến mãi (nếu có): </b><span id="khuyenMai"></span>
+                                </div>
+                                <div class="mb-2" id="khuyenMai">
+                                    <b>Giá trị khuyến mãi: </b><input type="text" class="border-0 text-end fw-bold" style="background-color: transparent" disabled id="txt-tiLeKhuyenMai" name="txt-khuyenMai">
+                                </div>
+                                <div class="mb-2" id="tichDiem">
+                                    <b>Tích điểm (tối thiểu 30): </b><input type="text" class="border-0 border-bottom text-end" style="background-color: transparent; outline: none" id="txt-tichDiem"  value="0">
+                                </div>
+                            </div>
 
                         </div>
                     </div>
                     <div>
                         <h5>Danh sách món đã đặt</h5>
-                        <div class="overflow-scroll mb-2" style="min-height: 400px">
-                            <table class="table table-bordered" id="danhSachMAnDH">
-                                <thead class="table-light">
-                                <th>STT</th>
-                                <th>Tên món ăn</th>
-                                <th>Số lượng</th>
-                                <th>Đơn vị</th>
-                                <th>Giá</th>
-                                <th>Ghi chú</th>
-                                <th>Bỏ</th>
+                        <div class="overflow-scroll mb-2" style="height: 370px">
+                            <table class="table table-hover table-bordered" id="danhSachMAnDH">
+                                <thead class="table-light sticky-top">
+                                    <th>STT</th>
+                                    <th>Tên món ăn</th>
+                                    <th>Số lượng</th>
+                                    <th>Đơn vị</th>
+                                    <th>Giá</th>
+                                    <th>Ghi chú</th>
+                                    <th>&nbsp;</th>
                                 </thead>
                                 <tbody>
 
@@ -45,35 +55,30 @@
                             </table>
                         </div>
                     </div>
-                    <div id="khuyenMai-tichDiem" class="d-none">
-                        <div class="mb-2" id="khuyenMai">
-                            <b>Khuyến mãi (nếu có):  </b><input type="text" class="border-0" disabled id="txt-khuyenMai" name="txt-khuyenMai" style="width: 400px">
-                        </div>
-                        <div class="mb-2" id="tichDiem">
-                            <b>Sử dụng tích điểm (tối thiểu 30): </b><input type="text" class="" id="txt-tichDiem" value="0">
-                        </div>
-                    </div>
                     <div>
-                        <h5 >Tổng tiền: <input type="number" class="tongTienDH border-0" value="0" disabled> <i class="fa-solid fa-dong-sign"></i></h5>
-                        <h5 class="d-inline-block">Tính tiền thối: <input type="text" id="txt-soTienKhachHang" placeholder="Nhập số tiền"> Tiền thối <input type="text" id="txt-tienThoi" disabled> <i class="fa-solid fa-dong-sign"></i></h5>
+                        <h5 class="text-end">Tổng tiền: <input type="text" class="tongTienDH border-0 text-end fw-bold" value="0" disabled style="background-color: transparent; "><i class="fa-solid fa-dong-sign"></i></h5>
+                        <h5 class="text-end">Tiền thối: <input class="text-end border-0 fw-bold" type="text" id="txt-tienThoi" disabled style="background-color: transparent;"><i class="fa-solid fa-dong-sign"></i></h5>
+                        <input type="text" class="form-control border-0 border-bottom" id="txt-soTienKhachHang" placeholder="Nhập số tiền của khách hàng" style="border-color: #000000 !important; border-radius: 0;">
                     </div>
-                    <input type="button" disabled id="btn-taoDH" value="Tạo đơn hàng">
+                    <input type="button" class="btn btn-success mt-3" disabled id="btn-taoDH" value="Tạo đơn hàng">
                 </form>
 
             </div>
-            <div class="col-5">
-                <h5>Thực đơn</h5>
+            <div class="col-5 border p-3" style="border-color: #000000 !important;">
+                <div class="text-end">
+                    <a href="./don-hang" class="btn btn-outline-dark">Quản lý đơn hàng</a>
+                </div>
+                <h5 class="text-uppercase">Thực đơn</h5>
                 <form action="">
                     <input type="search" name="txtTimMon" id="txt-TimMon" class="form-control my-2" placeholder="Nhập tên món">
                 </form>
-                <div class="overflow-scroll" style="height: 700px">
+                <div class="overflow-scroll" style="height: 650px">
                     <table class="table table-hover table-bordered" id="danhSachMA">
                         <thead class="table-light sticky-top">
                         <tr>
-                            <td>Hình</td>
-                            <td>Tên món</td>
-                            <td>Giá</td>
-                            <td>Thêm</td>
+                            <th class="text-center">Hình</th>
+                            <th class="text-center">Tên món</th>
+                            <th class="text-center">Giá</th>
 
                         </tr>
                         </thead>

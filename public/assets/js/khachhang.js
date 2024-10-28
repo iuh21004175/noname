@@ -33,10 +33,10 @@ document.addEventListener('DOMContentLoaded', async function (){
             list.forEach(function (khachHang, index){
                 let newRow = document.createElement('tr')
                 newRow.innerHTML = `
-                <td >${index + 1}</td>
-                <td>${khachHang.TenKhachHang}</td>
-                <td>${khachHang.SoDienThoai}</td>
-                <td>${khachHang.TichDiem}</td>
+                <td class="align-middle text-center">${index + 1}</td>
+                <td class="align-middle">${khachHang.TenKhachHang}</td>
+                <td class="align-middle">${khachHang.SoDienThoai}</td>
+                <td class="align-middle">${khachHang.TichDiem}</td>
                 <td>
                     <a href="./khach-hang-chi-tiet-${khachHang.MaKhachHang}" class="btn btn-light">Xem</a>
                     <button class="btn btn-outline-danger btn-xoa" data-bs-toggle="modal" data-bs-target="#message-xoa" value="${khachHang.MaKhachHang}">Xóa</button>

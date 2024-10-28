@@ -1,8 +1,3 @@
-<?php 
- if(!isset($_SESSION['user_id'])){
- header('Location: ./dang-nhap');
- }
- ?>
 <?php $_shouldextend[1]=1; ?>
 <?php $this->startSection('title', 'Quản lý khuyến mãi'); ?>
 <?php $this->startSection('content'); ?>
@@ -41,7 +36,7 @@
  <th>Phần trăm</th>
  <th>Thời gian bắt đầu</th>
  <th>Thời gian kết thúc</th>
- <th>Thao tác</th>
+ <th>&nbsp;</th>
  </tr>
  </thead>
  <tbody>

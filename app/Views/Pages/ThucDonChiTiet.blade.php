@@ -1,9 +1,3 @@
-@php
-    if(!isset($_SESSION['user_id'])){
-        header('Location: ./dang-nhap');
-    }
-
-@endphp
 @extends('MainNoNav')
 @section('title', 'Thực đơn chi tiết')
 @section('content')
